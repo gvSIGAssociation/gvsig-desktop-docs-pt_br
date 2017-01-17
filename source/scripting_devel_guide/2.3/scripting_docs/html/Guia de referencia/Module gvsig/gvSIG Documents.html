@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Module gvsig: Documents</title>
+  </head>
+  <body>
+    <h2>Module gvsig: Documents</h2>
+    <div class="stx">
+      <div class="section" id="class-project">
+        <h3>class Project</h3>
+        <p>Represents a gvSIG <a
+            href="../../../../javadocs/html/org/gvsig/app/project/Project.html">project</a></p>
+        <ul class="simple">
+          <li>getView([name]): Return active view, view called 'name' or
+            None
+            <ul>
+              <li>param name: (Optional) View name</li>
+              <li>type name: string</li>
+            </ul>
+          </li>
+          <li>getTable([name]): Return active Table Document, or Table
+            Document called 'name' or None
+            <ul>
+              <li>param name: (Optional) Table Document name</li>
+              <li>type name: string</li>
+            </ul>
+          </li>
+          <li>getProjectionCode(): Return Project projection name</li>
+        </ul>
+      </div>
+      <div class="section" id="class-view">
+        <h3>class View</h3>
+        <p>Represents gvSIG <a
+href="../../../../javadocs/html/org/gvsig/app/project/documents/view/DefaultViewDocument.html">view
+
+
+            document</a></p>
+        <ul class="simple">
+          <li>getLayer([name]): Return one of the view layers documents.
+            If name is None return active view layer if the view has
+            one. If name is not None return view layer called name. Else
+            return None.
+            <ul>
+              <li>param name: (Optional) View name</li>
+              <li>type name: string</li>
+            </ul>
+          </li>
+          <li>getMap(): Return view <a
+href="../../../../javadocs/html/org/gvsig/fmap/mapcontext/MapContext.html">mapContext</a></li>
+          <li>addLayer(layer): Add a gvSIG layer to the view
+            <ul>
+              <li>param layer: layer to add</li>
+              <li>type name: layer</li>
+            </ul>
+          </li>
+          <li>getLayers(): Return iterable view layers set</li>
+          <li>getGraphicsLayer(): Return view graphics layer</li>
+        </ul>
+      </div>
+      <div class="section" id="class-table">
+        <h3>class Table</h3>
+        <p>Represents gvsig <a
+href="../../../../javadocs/html/org/gvsig/app/project/documents/table/TableDocument.html">TableDocument</a>
+          It is able to manage its own data set</p>
+        <ul class="simple">
+          <li>features([expresion]): Return table features set
+            <ul>
+              <li>param expresion: (Optional) Filter to apply to the
+                feature set to select determinates features that match
+                with expression</li>
+              <li>type expresion: string</li>
+              <li>return: FeatureSet</li>
+            </ul>
+          </li>
+          <li>edit(): Set data store in edition mode</li>
+          <li>append(values): Create a new feature from given values and
+            insert it in the feature set
+            <ul>
+              <li>param values: dictionary with name property value or
+                list named params</li>
+              <li>type values: dict</li>
+            </ul>
+          </li>
+          <li>updateSchema(schema): Update table data definition with
+            schema.
+            <ul>
+              <li>param schema: Modified table schema</li>
+              <li>type schema: Editable Schema</li>
+            </ul>
+          </li>
+          <li>update(feature): Update exist feature in the layer
+            featureSet
+            <ul>
+              <li>param feature: Feature to modify in data set</li>
+              <li>type feature: Feature</li>
+            </ul>
+          </li>
+          <li>getSchema(): Return layer schema definition</li>
+          <li>commit(): Finish layer edition</li>
+          <li>abort(): Cancel layer edition</li>
+          <li>getSelection(): Return layer features selected set</li>
+        </ul>
+      </div>
+      <div class="section" id="class-layer">
+        <h3>class Layer</h3>
+        <p>Represents gvsig view <a
+href="../../../../javadocs/html/org/gvsig/fmap/mapcontext/layers/FLayer.html">layer</a>
+          . It is also is able to manage its own data set</p>
+        <ul class="simple">
+          <li>features([expresion]): Return layer features set
+            <ul>
+              <li>param expresion: (Optional) Filter to apply to the
+                feature set to select determinates features that match
+                with expression</li>
+              <li>type expresion: string</li>
+              <li>return: FeatureSet</li>
+            </ul>
+          </li>
+          <li>edit(): Set data store in edition mode</li>
+          <li>append(values): Create a new feature from given values and
+            insert it in the feature set
+            <ul>
+              <li>param values: dictionary with name property value or
+                list named params</li>
+              <li>type values: dict</li>
+            </ul>
+          </li>
+          <li>updateSchema(schema): Update table data definition with
+            schema.
+            <ul>
+              <li>param schema: Modified table schema</li>
+              <li>type schema: Editable Schema</li>
+            </ul>
+          </li>
+          <li>update(editableFeature): Update exist feature in the layer
+            featureSet
+            <ul>
+              <li>param editableFeature: editableFeature</li>
+              <li>type editableFeature: Java editableFeature</li>
+            </ul>
+          </li>
+          <li>getSchema(): Return layer schema definition</li>
+          <li>commit(): Finish layer edition</li>
+          <li>abort(): Cancel layer edition</li>
+          <li>getSelection(): Return layer features selected set
+            (FeatureSet)</li>
+          <li>getTypeVectorLayer(): Return layer geometry type.</li>
+        </ul>
+      </div>
+      <div class="section" id="documents-util-functions">
+        <h3>Documents util Functions</h3>
+        <ul class="simple">
+          <li>currentProject(): Return the current gvSIG <a
+href="file:///home/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/javadocs/html/org/gvsig/app/project/Project.html">project</a></li>
+          <li>currentDocument(): Return the current active document (<a
+href="file:///home/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/javadocs/html/org/gvsig/app/project/documents/view/DefaultViewDocument.html">view
+
+
+              document</a> or <a
+href="file:///home/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/javadocs/html/org/gvsig/app/project/documents/table/TableDocument.html">TableDocument</a>)</li>
+          <li>currentView(): Return the current active <a
+href="file:///home/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/javadocs/html/org/gvsig/app/project/documents/view/DefaultViewDocument.html">view
+
+
+              document</a> or None. If no view active view raise
+            RuntimeException</li>
+          <li>currentLayer(): Return current view active <a
+href="file:///home/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/javadocs/html/org/gvsig/fmap/mapcontext/layers/FLayer.html">layer</a></li>
+        </ul>
+      </div>
+    </div>
+    <h4><br>
+    </h4>
+  </body>
+</html>

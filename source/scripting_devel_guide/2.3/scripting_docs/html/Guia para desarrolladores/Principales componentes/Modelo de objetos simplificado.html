@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;
+      charset=windows-1252">
+    <title>Modelo de objetos simplificado</title>
+  </head>
+  <body>
+    <h2>Modelo de objetos simplificado</h2>
+    Aquí podemos ver un esquema con los componentes de uso mas comun
+    desde scripting, la relación entre ellos y como podemos acceder a
+    ellos desde nuestro script.<br>
+    Ademas podemos navegar a la información de la clase Java pulsando
+    sobre el componente.<br>
+    <br>
+    <p style="margin: 10px auto; padding: 10px 5px 5px 45px; width:
+      400px; background-repeat: no-repeat; background-position: 5px 5px;
+      background-image: url('../../images/icon-note.png');
+      background-color: #ffffce;" align="center"> <small><b>Desarrolladores
+
+
+
+
+
+          java y usuarios con conocimientos sobre UML </b><br>
+        El diagrama y comentarios esta pensado para que sea lo mas
+        entendible posible por un usuario sin conocimientos de java ni
+        UML, no para ser estricto con la nomenclatura UML. </small></p>
+    <p align="center"><img
+        src="images/Modelo%20de%20objetos%20simplificado.png"
+        usemap="#map" height="1143" width="1022" border="0"></p>
+    <map name="map">
+      <!-- #$-:Image map file created by GIMP Image Map plug-in -->
+      <!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
+      <!-- #$-:Please do not edit lines starting with "#$" -->
+      <!-- #$VERSION:2.3 -->
+      <!-- #$AUTHOR:Joaquin del Cerro Murciano --> <area shape="rect"
+        coords="328,96,411,136"
+        href="../../../../javadocs/html/org/gvsig/app/project/Project.html">
+      <area shape="rect" coords="326,169,406,216"
+href="../../../../javadocs/html/org/gvsig/app/project/documents/Document.html">
+      <area shape="rect" coords="315,303,427,346"
+href="../../../../javadocs/html/org/gvsig/app/project/documents/view/ViewDocument.html">
+      <area shape="rect" coords="324,433,416,474"
+href="../../../../javadocs/html/org/gvsig/fmap/mapcontext/MapContext.html">
+      <area shape="rect" coords="325,516,498,605"
+href="../../../../javadocs/html/org/gvsig/fmap/mapcontext/layers/FLayers.html">
+      <area shape="rect" coords="316,683,390,719"
+href="../../../../javadocs/html/org/gvsig/fmap/mapcontext/layers/FLyrDefault.html">
+      <area shape="rect" coords="38,629,156,733"
+href="../../../../javadocs/html/org/gvsig/fmap/dal/feature/FeatureStore.html">
+      <area shape="rect" coords="69,777,152,813"
+href="../../../../javadocs/html/org/gvsig/fmap/dal/feature/FeatureSet.html">
+      <area shape="rect" coords="166,779,260,815"
+href="../../../../javadocs/html/org/gvsig/fmap/dal/feature/FeatureType.html">
+      <area shape="rect" coords="75,891,216,953"
+        href="../../../../javadocs/html/org/gvsig/fmap/dal/feature/Feature.html">
+      <area shape="rect" coords="62,990,228,1061"
+href="../../../../javadocs/html/org/gvsig/fmap/dal/feature/EditableFeature.html">
+      <area shape="rect" coords="372,894,450,925"
+        href="../../../../javadocs/html/org/gvsig/fmap/geom/Geometry.html">
+      <area shape="rect" coords="566,811,693,844"
+href="../../../../javadocs/html/org/gvsig/fmap/geom/GeometryLocator.html">
+      <area shape="rect" coords="555,900,686,936"
+href="../../../../javadocs/html/org/gvsig/fmap/geom/GeometryManager.html">
+      <area shape="rect" coords="40,242,162,279"
+href="../../../../javadocs/html/org/gvsig/app/project/documents/table/TableDocument.html">
+      <area shape="rect" coords="579,235,704,266"
+href="../../../../javadocs/html/org/gvsig/app/project/documents/layout/LayoutDocument.html">
+      <area shape="rect" coords="588,309,693,341"
+href="../../../../javadocs/html/org/gvsig/app/project/documents/layout/LayoutContext.html">
+      <area shape="rect" coords="606,380,747,416"
+href="../../../../javadocs/html/org/gvsig/app/project/documents/layout/fframes/FFrame.html">
+      <area shape="rect" coords="547,437,640,472"
+href="../../../../javadocs/html/org/gvsig/app/project/documents/layout/fframes/FFrameView.html">
+      <area shape="rect" coords="654,540,760,576"
+href="../../../../javadocs/html/org/gvsig/app/project/documents/layout/fframes/FFramePicture.html">
+      <area shape="rect" coords="604,502,691,533"
+href="../../../../javadocs/html/org/gvsig/app/project/documents/layout/fframes/FFrameText.html">
+    </map>
+    <h2>Como interpretar el diagrama</h2>
+    En el diagrama anterior podemos ver:<br>
+    <ul>
+      <li><b>Cajas en amarillo</b>, que representan a objetos que
+        podemos encontrarnos y con los que podemos trabajar. </li>
+      <li><b>Cajas en verde</b>, nos indican acciones que podemos
+        realizar desde nuestro script. Por ejemplo, podemo ver:<br>
+        <p align="center"><img src="images/interpretar-funcion.png"></p>
+        Lo interpretaremos como que disponemos de una <i>funcion</i>, <i>currentProject()</i>,
+        que podemos ejecutar desde nuestro script para obtener el
+        objerto con el que esta relacionada, en este caso el <i>project</i>.
+        Para los elementos etiquetados como <i>"&lt;&lt;funcion&gt;&gt;"</i>,
+        precisaremos haber importado el modulo <i>gvsig</i>.<br>
+        <pre>  from gvsig import *
+</pre>
+      </li>
+      <li><b>Cajas en azul</b>, nos indica que se trata de una entidad
+        abstracta. Nunca encontraremos objetos de este tipo. Hacen
+        referencia de forma generica a un grupo de objetos con
+        caracteristicas comunes; por ejemplo, tendremos un <i>Document</i>
+        que agrupa las caracteristicas comunes de <i>ViewDocument</i>,
+        <i>TableDocument</i> o <i>LayoutDocument</i>. En el diagrama
+        podemos encontrarnos, por ejemplo:<br>
+        <p align="center"><img src="images/interpretar-herencia.png"></p>
+        Aqui tendriamos una entidad <i>FFrame</i> abstracta, no nos
+        encontraremos nunca objetos de este tipo, lo que nos
+        encontraremos sera objetos de tipo <i>FFrameView</i>, <i>FFramePicture</i>
+        o <i>FFrameText</i>, y nos indica que todos los objetos
+        concretos relacionados con <i>FFrame</i> tendran un conjunto de
+        atributos y operaciones comunes. </li>
+      <li><b>Asociaciones entre objetos</b>, que nos indican que a
+        partir de un objeto podemos obtener otro o un conjunto de otros.
+        Por ejemplo:<br>
+        <p align="center"><img src="images/interpretar-asociacion.png"></p>
+        Nos indica que si disponemos de un objeto <i>LayoutDocument</i>,
+        podemos obtener el objeto <i>LayoutContext</i> invocando a la
+        operación o metodo <i>getLaypoutContext</i>.<br>
+        <pre>  laypoutContext = layoutDocument.getLaypoutContext()
+</pre>
+      </li>
+    </ul>
+  </body>
+</html>

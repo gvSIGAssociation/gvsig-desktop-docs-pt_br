@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Funciones basicas</title>
+  </head>
+  <body>
+    <h2> Funciones basicas</h2>
+    En gvSIG existe una clara jerarquía entre los distintos documentos
+    que pueden formar un proyecto. De este modo, existe un "Proyecto"
+    que a su vez tiene Documentos por ejemplo, "Vistas", "Tablas",
+    "Mapas", algunos de estos documentos a su vez pueden tener
+    colecciones de otras cosas, por ejemplo una Vista puede tener
+    múltiples capas, es decir, podría decirse, que los documentos que
+    forman un proyecto puede decirse que tiene forma de árbol.<br>
+    <br>
+    Una de las ventajas de la extensión de scripting en gvSIG ­desktop 2
+    es que está completamente integrada en la plataforma, lo que permite
+    interactuar directamente con los distintos documentos que usa gvSIG,
+    sin embargo, puede ser complicado acceder a un elemento concreto del
+    proyecto, sobretodo si hay varios del mismo tipo. Para facilitar la
+    obtención de estos elementos existen funciones que nos permiten
+    acceder fácil y rápidamente a los documentos activos del proyecto.
+    Estas funciones son :<br>
+    <ul>
+      <li><i>currentProject</i><i>,</i> retorna el objeto <i>Proyecto</i></li>
+      <li><i>currentView,</i> retorna la <i>Vista</i> activa</li>
+      <li><i>currentTable,</i> la <i>Tabla</i> activa</li>
+      <li><i>currentLayer,</i> la <i>Capa</i> activa de la <i>Vista</i>
+        activa</li>
+    </ul>
+    <br>
+    <h3>El objeto Proyecto (Project). Función currentProject</h3>
+    El objeto que está más alto en la jerarquía es el Proyecto, y en
+    gvSIG únicamente puede haber uno cargado a la vez. Podemos obtener
+    el proyecto que tenemos cargado mediante la función currentProject.
+    <br>
+    La sintaxis es muy sencilla:<br>
+    <blockquote>
+      <pre>project = currentProject()</pre>
+    </blockquote>
+    El objeto project tiene, entro otros, los siguientes métodos:<br>
+    <ul>
+      <li><i>getView( [name] )</i>: Devuelve un documento de tipo Vista
+        o None. Si se invoca con el parámetro <i>name,</i> busca entre
+        las vistas y devuelve aquella cuyo nombre coincida. Si no hay
+        una vista cargada en el proyecto, devuelve None.&nbsp;</li>
+      <li><i>getTable(</i><i><i> [name] </i>):</i> Devuelve un
+        documento de tipo Table o None. Si se invoca con el parámetro
+        name, busca entre las tablas y devuelve aquella cuyo nombre, en
+        el gestor de proyectos, coincida. Si no hay una tabla cargada en
+        el proyecto, devuelve None.</li>
+      <li><i>getProjectionCode():</i> Devuelve un string con el código
+        de la proyección del proyecto </li>
+    </ul>
+    <h3> Acceso a las vistas del proyecto </h3>
+    Como hemos mencionado, los distintos elementos que constituyen un
+    proyecto están organizados de forma jerárquica en forma de árbol. De
+    este modo, para obtener un elemento concreto debemos preguntar a la
+    rama superior por ese elemento.<br>
+    Por ejemplo, supongamos que queremos obtener una vista distinta de
+    la que tenemos activa en el proyecto. Para ello lo primero que
+    debemos hacer es obtener el objeto que contiene las vistas, es decir
+    el proyecto, y a continuación, una vez que tenemos el proyecto
+    podemos pedir que nos de una vista concreta.<br>
+    Como hemos visto anteriormente código para obtener una vista del
+    proyecto sería:<br>
+    <blockquote>
+      <pre>    project = currentProject()
+    vista = project.getView('nombreDeLaVista')</pre>
+    </blockquote>
+    El método <i>getView</i> del proyecto nos permite obtener la vista
+    que esté activa o una concreta que especifiquemos mediante su
+    nombre. En el caso de que no encuentre una vista que coincida con el
+    nombre devolverá <i>None,</i> siendo <i>nombreDeLaVista</i> una
+    cadena de texto que coincida con el nombre de la vista con la que
+    deseamos trabajar.<br>
+    <br>
+    Observa que si invocamos el método sin pasar como parámetro el
+    nombre de&nbsp; la vista que queramos, el comportamiento es el mismo
+    que si invocamos a la&nbsp; función currentView, que se puede
+    invocar sin necesidad de obtener el&nbsp; proyecto previamente.<br>
+    <h3> El objeto vista (View). Función currentView</h3>
+    Esta función nos permite obtener directamente la vista activa de
+    nuestro proyecto, sin necesidad de estar buscando entre las vistas
+    que tenga el proyecto cargadas.<br>
+    La sintaxis es:<br>
+    <blockquote>
+      <pre>    vista = currentView()</pre>
+    </blockquote>
+    Los métodos principales del objeto Vista son:<br>
+    ­ <br>
+    <ul>
+      <li> <i>getLayer(name):</i> Devuelve un documento de tipo Layer o
+        None. Si se invoca con el parámetro name, busca entre las capas
+        cargadas en la Vista y devuelve aquella cuyo nombre en el TOC,
+        coincida. Si no hay una capa cargada en el proyecto, se produce
+        un error. </li>
+      <li><i>getLayers():</i> Devuelve una colección con las capas que
+        haya en la Vista. </li>
+      <li> <i>getGraphicsLayer():</i> Devuelve una capa especial de la
+        vista que se sitúa sobre ella </li>
+      <li> <i>getProjectionCode():</i> Devuelve un string con el código
+        de la proyección de la vista </li>
+    </ul>
+    <h3> La capa especial Graphics layer </h3>
+    Graphics layer es una capa especial asociada a una vista de gvSIG.
+    Esta capa vendría a ser como un acetato que se pinta sobre las capas
+    que componen la vista. La capa Graphics se puede utilizar para
+    pintar cosas sobre el resto y se accede mediante el método
+    getGraphicsLayer de la vista. Los objetos graphics que se insertan
+    en esta capa especial se agrupan mediante identificadores del grupo
+    (groupId).<br>
+    La sintaxis es:<br>
+    <blockquote>
+      <pre>    vista = currentView()
+    vista.getGraphicsLayer()</pre>
+    </blockquote>
+    Los métodos principales del objeto graphicsLayer son:<br>
+    <ul>
+      <li> <i>­ removeGraphics(groupId):</i> Borra los objetos graphics
+        que haya en el objeto graphicsLayer especificado mediante el
+        parámetro groupId.</li>
+      <ul>
+        <li><i>groupId,</i> string: identifica el grupo al que se van a
+          eliminar los objetos </li>
+      </ul>
+      <li> <i>addSymbol(symbol):</i> inserta el símbolo especificado
+        como parámetro en el objetographicsLayer y devuelve un
+        identificador del símbolo.</li>
+      <ul>
+        <li><i>Symbol,</i> Symbol: Símbolo que se inserará en el
+          graphicsLayer </li>
+      </ul>
+      <li> <i>addGraphic(groupId, geom, idsym, label)</i>: Añade un
+        graphic a la capa.</li>
+      <ul>
+        <li><i>groupId,</i> string: identifica el grupo al que se va a
+          añadir el graphic </li>
+        <li><i>geom,</i> Geometry: Geometría que se va a usar para
+          añadir el graphic </li>
+        <li><i>idsym,</i> int: Identificador, dentro del graphicsLayer,
+          del símbolo que se va a usar (seobtiene del método addSymbol)
+        </li>
+        <li><i>Label,</i> string: Etiqueta que se le añade al símbolo. </li>
+      </ul>
+      <li> <i>getTypeVectorLayer():</i> Devuelve el tipo de geometría
+        de la capa graphics. </li>
+    </ul>
+    Un uso correcto del objeto graphicsLayer implica que lo primero que
+    debemos hacer es borrar los graphics que haya dentro del groupId que
+    vayamos a utilizar. Después insertaremos los símbolos que queramos
+    utilizar y por último añadiremos los graphics a la capa.<br>
+    <br>
+    El siguiente código define una función que recibe como parámetros
+    una geometría y un símbolo y los añade a la graphicsLayer de la
+    vista activa.<br>
+    <blockquote>
+      <pre>    def insertSymbol(geometry, symbol):
+      graphicsLayer = currentView().getGraphicsLayer()
+      graphicsLayer.removeGraphics("ejemplo")
+      idSimbolo = graphicsLayer.addSymbol(symbol)
+      graphicsLayer.addGraphic("ejemplo", geometry, idSimbolo, "Etiqueta")</pre>
+    </blockquote>
+    <h3> Acceso a las capas de la vista</h3>
+    Como hemos visto podemos obtener la capa activa de la vista mediante
+    la función currentLayer, pero si deseamos obtener una capa distinta
+    debemos solicitarsela a la vista mediante el método getLayer
+    pasándole como parámetro el nombre de la capa que deseamos obtener.<br>
+    La sintaxis es:<br>
+    <pre>    vista.getLayer([ nombreDeLaCapa ])</pre>
+    Siendo nombreDeLaCapa una cadena de texto que coincida con el nombre
+    de la capa que deseamos obtener.<br>
+    <br>
+    <blockquote><i>Si invocamos el método sin parámetros, devolverá la
+        capa activa, si hay&nbsp; alguna, y None en caso contrario. Es
+        decir, tiene el mismo comportamiento&nbsp; que la función
+        currentLayer</i><br>
+    </blockquote>
+    <br>
+    Es posible también obtener una colección con todas las capas que
+    tiene cargadas la vista a través del método getLayers.<br>
+    La sintaxis es<br>
+    <blockquote>
+      <pre>    layers = vista.getLayers()</pre>
+    </blockquote>
+    Esta colección nos permite recorrer todas las capas de la vista y
+    operar con ellas.<br>
+    <h3> Obtener el documento Table activo . Función currentTable</h3>
+    Devuelve la Tabla activa del proyecto<br>
+    La sintaxis es<br>
+    <blockquote>
+      <pre>    table = currentTable()</pre>
+    </blockquote>
+    <h3> Obtener la capa activa. Función currentLayer</h3>
+    Esta función permite obtener directamente la capa activa de nuestra
+    vista.<br>
+    La sintaxis es<br>
+    <blockquote>
+      <pre>    layer = currentLayer()</pre>
+    </blockquote>
+    <h3> 5 Funciones de simbología. Creación de símbolos básicos</h3>
+    Estas funciones devuelven un símbolo básico que podemos instertar en
+    el objeto graphicsLayer.<br>
+    Estas funciones son:<br>
+    ­ <br>
+    <ul>
+      <li> <i>simplePointSymbol(color):</i> Devuelve un símbolo básico
+        de tipo punto del color especificado como parámetro. </li>
+      <li> <i>simpleLineSymbol(color):</i> Devuelve un símbolo básico
+        de tipo linea del color especificado como parámetro. </li>
+      <li> <i>simplePoligonSymbol(color):</i> Devuelve un símbolo
+        básico de tipo polígono del color especificado como parámetro. </li>
+    </ul>
+    El parámetro color puede ser o un string que se corresponde con el
+    nombre de un color o un objeto <i>java.awt.Color</i> :
+    <ul>
+      <ul>
+        <li> <i>color,</i> string: Nombre del color. Los valores
+          admitidos son: 'black', 'blue', 'cyan', 'darkGray','gray',
+          'green', 'lightGray', 'magenta', 'orange', 'pink', 'red',
+          'white', 'yellow' </li>
+      </ul>
+    </ul>
+    <h3>Otras funciones</h3>
+    <h4> Función getCRS</h4>
+    Devuelve un objeto Projection a partir de un código. Si el código no
+    es válido, devuelve None.<br>
+    <blockquote>
+      <pre>    projection = getCRS(name)</pre>
+    </blockquote>
+    <ul>
+      <li><i>getCRS(name):</i></li>
+      <ul>
+        <li><i>name,</i> string: Código de la proyección que queremos
+          obtener, por ejemplo: 'EPSG:23030', 'CRS:84' </li>
+      </ul>
+    </ul>
+    <h4> Función getDataFolder</h4>
+    Devuelve la ruta en la que se encuentra la carpeta de datos definida
+    en las preferencias de gvSIG (Preferencias/General/Carpetas). Si la
+    carpeta no está definida devuelve None. <br>
+    La sintaxis es<br>
+    <blockquote>
+      <pre>    path = getDataFolder()</pre>
+    </blockquote>
+    <h4> Función getColorFromRGB</h4>
+    Devuelve un objeto java.awt.Color a partir de los valores rojo,
+    verde, azul y alpha en un rango 0­ .. 255.<br>
+    <blockquote>
+      <pre>    color = getColorFromRGB(r, g, b ,a)</pre>
+    </blockquote>
+    <ul>
+      <li>getColorFromRGB(r, g, b [,a]):</li>
+      <ul>
+        <li>r, int: valor del rojo (0­255) </li>
+        <li> g, int: valor del verde (0­255) </li>
+        <li> b, int: valor del azul (0­255) </li>
+        <li> a, int (opcional): valor del alpha (0­255) </li>
+      </ul>
+    </ul>
+    <h4> Función getDefaultColor</h4>
+    Devuelve el objeto java.awt.Color que se corresponde con el color
+    por defecto del relleno definido en las preferencias de gvSIG
+    (preferencias/Simbología).<br>
+    <blockquote>
+      <pre>    color = getDefaultColor()</pre>
+    </blockquote>
+    &nbsp;<br>
+    <br>
+  </body>
+</html>

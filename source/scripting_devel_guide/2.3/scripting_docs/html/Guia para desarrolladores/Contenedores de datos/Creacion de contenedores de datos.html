@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Creacion de contenedores de datos vectoriales</title>
+  </head>
+  <body>
+    <h2>Creacion de contenedores de datos vectoriales<br>
+    </h2>
+    Los contenedores de datos vectoriales desde la extensión de
+    scripting de gvSIG son 2, el objeto Table, y el objeto Layer. Ambos
+    objetos contienen registros y la principal diferencia entre ellos
+    respecto los datos que contienen es que un registro de una capa
+    contiene un campo 'GEOMETRY'.<br>
+    <br>
+    Hemos visto como acceder a los objetos Table y Layer tanto a través
+    de las funciones currentTable() y currentLayer() y a través del
+    objeto Project, mediante el método getTable, y del objeto Vista
+    mediante el método getLayer(), respectivamente. Ahora veremos cómo
+    crear estos objetos.<br>
+    <h2>El esquema ( Schema ).</h2>
+    A la hora de crear un contenedor de datos, lo primero que deberemos
+    hacer es crear un esquema que represente esos datos. Este esquema
+    como mínimo deberá tener un campo de tipo Geometry si vamos a crear
+    una capa (Layer).<br>
+    <h3>Función createSchema()</h3>
+    Existe una función que nos permite crar una definición de datos de
+    forma rápida, ya sea una copia de una definición existente o una
+    definición completamente nueva a la que iremos añadiendo las
+    propiedades que deseemos.<br>
+    La sintaxis de la función es:<br>
+    <pre>    createSchema([schema])</pre>
+    <ul>
+      <li> createSchema(schema): Devuelve una nueva instancia de un
+        Schema.</li>
+      <ul>
+        <li>&nbsp; schema, Schema (opcional): Si se invoca pasándole
+          como parámetro un objeto Schema, tratará de realizar una copia
+          del mismo y la devolverá en modo edición, si no puede realizar
+          la copia devolverá un Schema nuevo vacío en modo edición. </li>
+      </ul>
+    </ul>
+    <h3>Añadir campos a una definición de datos. El método append</h3>
+    El método append de una definición de datos nos permite añadir un
+    atributo nuevo a la definición de los datos y definir sus
+    propiedades. Si la definición de datos no está en modo edición al
+    invocar este método se activará.<br>
+    <pre>    schema.append(name, type, size, default, precision)</pre>
+    <ul>
+      <li> name, string: Nombre de la propiedad </li>
+      <li> type, string: Tipo de dato que va a contener. Los valores
+        admitidos más usuales son:</li>
+      <ul>
+        <li> "BOOLEAN" </li>
+        <li> "DOUBLE" </li>
+        <li> "FLOAT" </li>
+        <li> "INTEGER" </li>
+        <li> "LONG" </li>
+        <li> "STRING" </li>
+        <li> "GEOMETRY" </li>
+      </ul>
+    </ul>
+    <blockquote> Existen más tipos de datos que pueden usarse y puedes
+      consultarlos en la documentación de los <a
+        href="../../../../javadocs/html/org/gvsig/fmap/dal/DataTypes.html">DataTypes</a><br>
+    </blockquote>
+    <ul>
+      <li>size, int (opcional): Tamaño de la propiedad. Determina el
+        tamaño máximo de los datos de tipo string. También se utiliza en
+        la representación del dato. </li>
+    </ul>
+    <blockquote> <i>El tamaño por defecto del campo que se va a crear
+        es 1 por lo que es </i><i>recomendable indicar el tamaño del
+        campo.</i></blockquote>
+    <ul>
+      <li> default, object (opcional): Valor por defecto de la propiedad
+        si no se indica ningún otro. </li>
+    </ul>
+    <blockquote> <i>El valor por defecto en tipos numéricos es el 0
+        (cero), y en cadenas es “” </i>(cadena vacía)</blockquote>
+    <ul>
+      <li> precision, int (opcional): Establece el número de decimales
+        del tipo de datos, si este es numérico y admite decimales. </li>
+    </ul>
+    <blockquote> <i>El valor por defecto del atributo precision es 4,
+        por lo que si necesitamos una </i><i>precisión mayor será
+        necesario indicarlo.</i></blockquote>
+    <h3>Ejemplos</h3>
+    Por ejemplo, queremos crear una definición de datos que usaremos
+    luego en una tabla dxf y solo queremos que tenga un campo llamado
+    "ID" de tipo LONG<br>
+    <pre>    schema = createSchema()
+    schema.append("ID", "LONG", 15)</pre>
+    <br>
+    También podemos queremos obtener una copia de la estructura de datos
+    de la capa activa y añadirle una propiedad más, por ejemplo de tipo
+    string, con un tamaño de 25 carácteres y con valor por defecto "Sin
+    modificar".<br>
+    <pre>    schema = createSchema(currentLayer.getSchema())
+    schema.append("Campo", "STRING", size=25, default="Sin modificar")</pre>
+    El siguiente código crea un Schema con 3 campos, "ID", "Nombre",
+    "Geometry"<br>
+    <pre>    from gvsig import *</pre>
+    <pre>    def main():
+      schema = createSchema()
+      schema.append("ID", "Integer", 5)
+      schema.append("Nombre", "String", 50)
+      schema.append("GEOMETRY", "Geometry")</pre>
+    <h2>Crear una capa de tipo shape</h2>
+    Para crear una capa de tipo shape, es necesario tener en cuenta que
+    el schema tiene que tener obligatoriamente un campo llamado
+    "GEOMETRY" de tipo "Geometry". En caso de que este campo no esté
+    definido en el Schema, se producirá un error.<br>
+    Puede crearse un shape mediante la función createShape , que
+    devuelve la capa recien creada y cuya sintaxis es:<br>
+    <pre>    createShape(schema, filename [, CRS] [,geometryType])</pre>
+    <ul>
+      <li> schema, Schema: Definición de los datos. </li>
+      <li> filename, string: Ruta absoluta donde debe guardarse el nuevo
+        archivo shape </li>
+      <li> CRS, string (opcional): Código del sistema de referencia. Si
+        no se indica uno por defecto se establecerá WGS 84. </li>
+      <li> geometryType, GeometryType (opcional): Tipo de geometría del
+        shape. Si no se indica el tipo de geometría el valor por defecto
+        es POINT. Los otros valores admitidos son:</li>
+      <ul>
+        <li> POINT </li>
+        <li> LINE </li>
+        <li> POLYGON </li>
+        <li>MULTIPOINT </li>
+        <li> MULTILINE </li>
+        <li> MULTIPOLYGON </li>
+      </ul>
+    </ul>
+    Siguiendo con nuestro ejemplo, una vez que tenemos nuestro schema
+    crearemos un shape en la carpeta "/tmp/pruebaShape.shp" (puedes
+    cambiar la ruta y usar cualquier otra en la que tengas permisos de
+    escritura), usando como CRS "EPSG:23030".<br>
+    <br>
+    <i>Nota: El siguiente código crea únicamente una capa sin features</i><br>
+    <br>
+    <pre>import tempfile<br>import os.path<br>from gvsig import *<br>from geom import *<br>def main():
+    ruta = os.path.join(tempfile.gettempdir(),"pruebaShape.shp")
+    schema = createSchema()
+    schema.append("ID", "Integer", 5)
+    schema.append("Nombre", "String", 50)
+    schema.append("GEOMETRY", "Geometry")
+    newShape = createShape(
+      schema,
+      shpFile=ruta,
+      CRS="EPSG:23030",
+      geometryType=POINT
+    )
+</pre>
+    <h2>Creación de una tabla de tipo DBF</h2>
+    Al igual que para crear una capa (shape), lo primero que debemos
+    hacer para crear una tabla (DBF), es establecer su estructura de
+    datos, mediante un objeto Schema.<br>
+    La diferencia más notable a la hora de crear una tabla es que no es
+    necesario que haya definido un campo "GEOMETRY" en el Schema, por lo
+    que el código para crear un dbf igual que en el ejemplo anterior
+    sería:<br>
+    <br>
+    <pre>    import tempfile
+    import os.path<br>
+    from gvsig import *
+    def main():
+      ruta = os.path.join(tempfile.gettempdir(), "pruebaDBF.dbf")
+      schema = createSchema()
+      schema.append("ID", "Integer", 5)
+      schema.append("Nombre", "String", 50)
+      newTable = createTable(
+        schema,
+        shpFile=ruta,
+        CRS="EPSG:23030",
+      )
+</pre>
+    Supongamos que tenemos una capa cargada en la Vista y queremos crear
+    una tabla, cuyos campos serían "ID" que será un contador, otro campo
+    "IDFeature" que será el valor del campo "ID" de la capa de entrada,
+    y un último campo "COMENTARIOS" con un tamaño de 200 caracteres.<br>
+    <pre>  import tempfile
+  import os.path
+  from gvsig import *
+
+  def main():
+    #Establecemos donde vamos a guardar el dbf
+    ruta = os.path.join(tempfile.gettempdir(),"ejemploDBF.dbf")
+    #Obtenemos la capa de entrada
+    layer = currentLayer()
+    #Obtenemos el codigo de la proyeccion de la capa
+    crs = layer.getProjectionCode()
+    #Obtenemos la definición de datos de la capa de entrada
+    layerSchema = layer.getSchema()
+    #Obtenemos el atributo 'ID'
+    attr = layerSchema.get("ID")
+    #Obtenemos el tipo de dato y el tamaño del atributo
+    tipoDeDato = attr.getDataTypeName()
+    size = attr.getSize()
+    #Creamos la definición de datos
+    schema = createSchema()
+    schema.append("ID", "Long", 10)
+    schema.append("IDFeature", tipoDeDato, size)
+    schema.append("COMENTARIOS", "String", 200)
+    #Creamos la tabla
+    newTable = createTable(
+      schema,
+      shpFileruta,
+      CRS=crs,
+    )
+    #Obtenemos los fenómenos de la capa de entrada
+    features = layer.features()
+    #Inicializamos las variable
+    values = dict()
+    for index, feature in enumerate(features):
+      # Obtenemos los datos de los nuevos registros
+      values["ID"] = index
+      values["IDFeature"] = feature.get("ID")
+      values["COMENTARIOS"] =""
+      #Añadimos los registros a la tabla nueva
+      newTable.append(values)
+
+    #Terminamos la edición de la tabla guardando los cambios
+    newTable.commit()
+</pre>
+  </body>
+</html>

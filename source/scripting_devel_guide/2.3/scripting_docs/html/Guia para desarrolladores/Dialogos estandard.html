@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Dialogos estandard</title>
+  </head>
+  <body>
+    <h2>Los diálogos estándard</h2>
+    Los diálogos permiten interactuar con el usuario desde los propios
+    scripts, ya sea para notificarle algo o para preguntarle alguna
+    cuestión.<br>
+    <h3>La ventana de mensajes, msgbox</h3>
+    Esta ventana permite mostrar al usuario de gvSIG una ventana con un
+    texto, sin que el usuario pueda realizar ninguna acción sobre la
+    ventana mas allá de aceptar.<br>
+    La ventana se invoca mediante la función msgbox que se encuentra en
+    el módulo commonsdialog, con la siguiente sintaxis:<br>
+    <pre>msgbox(mensaje [, title, messageType])</pre>
+    <ul>
+      <li><i>mensaje,</i> string: Texto que se va a mostrar en la
+        ventana de diálogo</li>
+      <li><i>title,</i> string (opcional): Título de la ventana. Por
+        defecto no se usa ninguno.</li>
+      <li><i>messageType,</i> int de 0­ a 3 (opcional): Determina qué
+        clase de mensaje es el que estamos mostrando, selecciona un
+        icono que se mostrará en la ventana. Se utiliza para enfatizar
+        el tipo de mensaje que se está mostrando al usuario. Las
+        constantes disponibles son:</li>
+      <ul>
+        <li><i>FORBIDEN:</i> Icono prohibido </li>
+        <li><i>IDEA:</i> Icono bombilla </li>
+        <li><i>WARNING:</i> Icono atención </li>
+        <li><i>QUESTION:</i> Icono interrogación </li>
+      </ul>
+    </ul>
+    <br>
+    Siguiendo con nuestro script Hola mundo podemos modificarlo para que
+    en vez de mostrar un texto en el área de notificaciones del editor
+    de scripts, muestre un aviso al usuario de gvSIG. El código para
+    nuestro script es el siguiente (<i>ejemplo 1</i>)<br>
+    <blockquote>
+      <pre><font color="#009900">import</font> <font color="#000099">commonsdialog</font></pre>
+      <pre><font color="#009900">def</font> <font color="#000099">main</font>():</pre>
+      <pre>  commonsdialog.msgbox(<font color="#990000">"Hola mundo!", "Saludo"</font>,</pre>
+      <pre>    commonsdialog.WARNING)</pre>
+    </blockquote>
+    Una vez introducido, lo guardaremos con la opción <i>File/Save</i>,
+    y ya estaremos listos para ejecutarlo con la opción<i> File/Run</i>.<br>
+    Observaremos que nos presenta un cuadro de mensajes con el texto <i>¡Hola
+
+      mundo!</i>, como icono <i>el símbolo de atención</i> y el título
+    de la ventana es <i>Saludo.</i> Además, el usuario únicamente puede
+    pulsar el botón <i>Aceptar.</i><br>
+    <br>
+    <div align="center"><img alt="" src="images/msgbox.png" height="269"
+        width="456"><br>
+      Ventana de diálogo msgbox<br>
+    </div>
+    <br>
+    <h3>La ventana de diálogo, confirmDialog</h3>
+    <br>
+    Esta ventana nos permite mostrar al usuario un mensaje y que decida
+    entre varias opciones, no solo aceptar.<br>
+    Se invoca mediante la función confirmDialog que se encuentra en el
+    módulo commonsdialog, con la siguiente sintaxis:<br>
+    <br>
+    <pre>confirmDialog(message,[title, optionType, messageType])</pre>
+    <br>
+    <ul>
+      <li><i>mensaje,</i> string: Texto que se va a mostrar en la
+        ventana de diálogo</li>
+      <li><i>title,</i> string (opcional): Título de la ventana. Por
+        defecto no se usa ninguno.</li>
+      <li>optionType, int del 0­ al 2: Determina qué botones se ofrecen
+        al usuario para que pueda pulsar. Las constantes admitidas son :</li>
+      <ul>
+        <li>YES_NO : botones sí/no. </li>
+        <li><i>YES_NO_CANCEL</i> : botones sí/no/cancel. </li>
+        <li><i>ACEPT_CANCEL</i> : botones aceptar/cancelar. </li>
+      </ul>
+      <li><i>messageType,</i> int [0­3] (opcional): Determina qué clase
+        de mensaje es el que estamos mostrando, selecciona un icono que
+        se mostrará en la ventana. Se utiliza para enfatizar el tipo de
+        mensaje que se está mostrando al usuario. Las constantes
+        disponibles son:</li>
+      <ul>
+        <li><i>FORBIDEN</i> : Icono de prohibido. </li>
+        <li><i>IDEA</i> : Icono de bombilla </li>
+        <li><i>WARNING</i> : Icono de atención. </li>
+        <li><i>QUESTION</i> : Icono de interrogación </li>
+      </ul>
+    </ul>
+    Un ejemplo, pensemos que queremos ofrecer al usuario la opción de
+    elegir si desea que se le muestre un mensaje (ejemplo 2).<br>
+    <blockquote>
+      <pre><font color="#009900">import</font> <font color="#000099">commonsdialog</font></pre>
+      <pre><font color="#009900">def</font> <font color="#000099">main</font>():</pre>
+      <pre>  message = <font color="#660000">"Desea que se le muestre un mensaje?"</font></pre>
+      <pre>  title = <font color="#660000">"Aviso"</font></pre>
+      <pre>  optionType = commonsdialog.YES_NO</pre>
+      <pre>  messageType = commonsdialog.QUESTION</pre>
+      <pre>  option = commonsdialog.confirmDialog(message, title, optionType,</pre>
+      <pre>    messageType)</pre>
+      <pre>  <font color="#009900">if</font> option == 0: <font color="#666666"># opcion si</font></pre>
+      <pre>    commonsdialog.msgbox(<font color="#660000">"¡Hola mundo!"</font>,<font color="#660000"> "Saludo"</font>,</pre>
+      <pre>      commonsdialog.IDEA)</pre>
+    </blockquote>
+    <br>
+    El resultado de ejecutar el script se muestra en la siguiente imagen<br>
+    <br>
+    <div align="center"><img alt="" src="images/confirmDialog.png"
+        height="429" width="658"></div>
+    <div align="center">Ventana de diálogo confirmDialog<br>
+    </div>
+    <h3>La ventana de diálogo, inputbox</h3>
+    La ventana de diálogo inputbox nos permite obtener un valor
+    facilitado por el usuario del script y trabajar con él. Muestra una
+    ventana con un cuadro de texto y 2 botones, <i>Aceptar</i> y <i>Cancelar.</i>
+    Si el usuario pulsa el botón Aceptar el valor que obtenemos es el
+    contenido de la caja de texto, si por el contrario pulsa el botón <i>Cancelar</i>
+    el valor devuelto será <i>None.</i><br>
+    <br>
+    <div align="center"><img alt="" src="images/inputbox.png"
+        height="334" width="598"></div>
+    <div align="center">La ventana de diálogo, inputbox<br>
+    </div>
+    <br>
+    La ventana se invoca mediante la función inputbox que se encuentra
+    en el módulo commonsdialog, con la siguiente sintaxis:<br>
+    <pre>inputbox(mensaje)</pre>
+    <ul>
+      <li><i>mensaje,</i> string: Texto que se va a mostrar en la
+        ventana de diálogo que deberá facilitar información sobre lo que
+        el usuario debe introducir. </li>
+    </ul>
+    Podemos crear un script que permita al usuario introducir un texto
+    que se muestre en una ventana.&nbsp; El código podría ser (<i>ejemplo
+
+      3</i>)<br>
+    <br>
+    <blockquote>
+      <pre><font color="#006600">import</font> <font color="#000099">commonsdialog</font></pre>
+      <pre><font color="#006600">def</font> <font color="#000099">main</font>():</pre>
+      <pre>  titulo = <font color="#660000">"Script inputbox"</font></pre>
+      <pre>  texto = commonsdialog.inputbox(</pre>
+      <pre>    <font color="#660000">"Introduzca el texto que desea visualizar"</font>)</pre>
+      <pre>  commonsdialog.msgbox(texto, titulo, commonsdialog.IDEA)</pre>
+    </blockquote>
+    <br>
+    Cuando se ejecute el script, aparecerá una ventana en la que se
+    podrá introducir un texto que se mostrará cuando el usuario pulse el
+    botón <i>Aceptar.</i><br>
+    Si no queremos que se muestre la ventana de mensajes, si el área de
+    texto está vacía o si el usuario pulsa el botón <i>Cancelar,</i>
+    bastará con comprobar el valor de lo que devuelve la función
+    inputbox.<br>
+    El siguiente script verifica lo que ha introducido el usuario y en
+    el caso de que no haya introducido nada o pulse el botón <i>Cancelar</i>
+    muestra un aviso, en caso contrario muestra el contenido de la caja
+    de texto (<i>ejemplo 4</i> )<br>
+    <blockquote>
+      <pre>import commonsdialog</pre>
+      <pre>def main():</pre>
+      <pre>  texto = commonsdialog.inputbox(</pre>
+      <pre>  "Introduzca el texto que desea visualizar")</pre>
+      <pre>  if texto:</pre>
+      <pre>    commonsdialog.msgbox(texto, "Script inputbox",</pre>
+      <pre>      commonsdialog.IDEA)</pre>
+      <pre>  else:</pre>
+      <pre>    commonsdialog.msgbox(</pre>
+      <pre>      "Debe introducir un texto para continuar.",</pre>
+      <pre>      "Script inputbox",</pre>
+      <pre>      commonsdialog.FORBIDEN)</pre>
+    </blockquote>
+    <h2>Diálogos de selección de archivos y directorios</h2>
+    En el módulo commonsdialog, existen 3 funciones para la selección de
+    archivos y directorios.<br>
+    Las 3 funciones utilizan la misma sintaxis, admiten 2 parámetros
+    opcionales:<br>
+    <ul>
+      <li><i>title</i> string (opcional): Título de la ventana </li>
+      <li><i>initialPath</i> string (opcional): Directorio que se usará
+        inicialmente cuando se muestre el diálogo. </li>
+    </ul>
+    Si el parámetro <i>initialPath</i> se omite o no es válido intenta
+    mostrar el directorio del usuario, si no puede obtenerlo, abre el
+    directorio donde está instalado gvSIG.<br>
+    <h3>Función openFileDialog</h3>
+    Esta función muestra una ventana de diálogo que permite seleccionar
+    un archivo. Devuelve la ruta absoluta de un fichero que se haya
+    seleccionado o None en caso de que se cierre la ventana o se <br>
+    pulse el botón cancelar<br>
+    La sintaxis es:<br>
+    <pre>openFileDialog([title, initialPath])</pre>
+    <ul>
+      <li><i>title</i> string (opcional): Título de la ventana </li>
+      <li><i>initialPath</i> string (opcional): Directorio que se usará
+        inicialmente cuando se muestre el diálogo. </li>
+    </ul>
+    Por ejemplo, queremos obtener la ruta de un shape que está guardado
+    en la carpeta de cartografía definida en gvSIG. Si no se selecciona
+    ningún archivo, muestra un mensaje avisando (<i>ejemplo 5</i>).<br>
+    <blockquote><cite>Se puede definir esta carpeta en gvSIG desde el
+        diálogo de preferencias, en la </cite><cite>rama
+        General/Carpetas.</cite><br>
+    </blockquote>
+    <blockquote>
+      <pre><font color="#006600">import</font> <font color="#000099">gvsig</font></pre>
+      <pre><font color="#006600">import</font> <font color="#000099">commonsdialog</font></pre>
+      <pre><font color="#006600">def</font> <font color="#000099">main</font>():</pre>
+      <pre>  path_inicial = gvsig.getDataFolder()</pre>
+      <pre>  file_path = commonsdialog.openFileDialog(<font color="#660000">"Abrir Archivo"</font>,</pre>
+      <pre>    path_inicial)</pre>
+      <pre><font color="#006600">  if</font> <font color="#663366">not</font> file_path:</pre>
+      <pre>    commonsdialog.msgbox(<font color="#660000">"Seleccione un archivo"</font>, <font color="#660000">"Aviso"</font>,</pre>
+      <pre>      commonsdialog.WARNING)</pre>
+      <pre><font color="#006600">    return</font></pre>
+      <pre><font color="#666666">#</font></pre>
+      <pre><font color="#666666"># Codigo</font></pre>
+      <pre><font color="#666666">#</font></pre>
+    </blockquote>
+    <h3>Función saveFileDialog</h3>
+    Esta función muestra una ventana de diálogo que permite seleccionar
+    un archivo. Devuelve la ruta absoluta de un fichero que se haya
+    seleccionado o None en caso de que se cierre la ventana o se pulse
+    el botón <i>cancelar</i><br>
+    La sintaxis es:<br>
+    <pre>saveFileDialog([title, initialPath])</pre>
+    <ul>
+      <li><i>title</i> string (opcional): Título de la ventana </li>
+      <li><i>initialPath</i> string (opcional): Directorio que se usará
+        inicialmente cuando se muestre el diálogo. </li>
+    </ul>
+    Supongamos que queremos obtener una ruta donde vamos a guardar un
+    archivo en el directorio temporal del sistema. El código sería
+    (ejemplo 6):<br>
+    <blockquote>
+      <pre>import tempfile</pre>
+      <pre>import commonsdialog</pre>
+      <pre>path_inicial = tempfile.gettempdir()</pre>
+      <pre>file_path = commonsdialog.saveFileDialog("Guardar Archivo",</pre>
+      <pre>  path_inicial)</pre>
+      <pre>if not file_path:</pre>
+      <pre>  commonsdialog.msgbox("Seleccione un archivo", "Aviso",</pre>
+      <pre>    commonsdialog.WARNING)</pre>
+      <pre>  return</pre>
+      <pre>#</pre>
+      <pre># Codigo</pre>
+      <pre>#</pre>
+    </blockquote>
+    <h3>Función openDirectoryDialog</h3>
+    Esta función muestra una ventana de diálogo que permite seleccionar
+    un directorio. Devuelve la ruta absoluta de un fichero que se haya
+    seleccionado o None en caso de que se cierre la ventana o se pulse
+    el botón cancelar<br>
+    La sintaxis es:<br>
+    <pre>openFolderDialog([title, initialPath])</pre>
+    <ul>
+      <li><i>title</i> string (opcional): Título de la ventana </li>
+      <li><i>initialPath</i> string (opcional): Directorio que se usará
+        inicialmente cuando se muestre el diálogo. </li>
+    </ul>
+    Por ejemplo, queremos obtener la ruta de un directorio y queremos
+    que se muestre inicialmente el directorio del usuario en el sistema.
+    Si no se selecciona ningún directorio, muestra un mensaje avisando (<i>ejemplo
+
+      7</i>).<br>
+    <blockquote>
+      <pre>import commonsdialog</pre>
+      <pre>file_path = commonsdialog.openFolderDialog("Abrir Directorio")</pre>
+      <pre>if not file_path:</pre>
+      <pre>  commonsdialog.msgbox("Seleccione un directorio", "Aviso",</pre>
+      <pre>    commonsdialog.WARNING)</pre>
+      <pre>  return</pre>
+      <pre>#</pre>
+      <pre># Codigo</pre>
+      <pre>#</pre>
+    </blockquote>
+    <br>
+    <br>
+    <br>
+  </body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Manejo de geometrias</title>
+  </head>
+  <body>
+    <h2> Manejo de geometrías. <br>
+    </h2>
+    Una geometría son conjuntos de posiciones directas en un sistema de
+    coordenadas de referencia particular. Una geometría puede ser
+    considerado como un conjunto infinito de puntos que satisface las
+    interfaces de operación de ajuste para un conjunto de posiciones
+    directas.<br>
+    Un objeto geométrico será una combinación de una geometría de
+    coordenadas y un sistema de coordenadas de referencia. En todas las
+    operaciones, todos los cálculos geométricos se hace en el sistema de
+    coordenadas de referencia del primer objeto geométrico visitada, que
+    normalmente es el objeto cuya operación está siendo invocado.
+    Objetos devueltos deberán estar en el sistema de coordenadas de
+    referencia en el que los cálculos se hacen a menos que se
+    especifique lo contrario.<br>
+    <h2> El concepto de tipo y subtipo</h2>
+    En gvSIG, el tipo únicamente hace referencia a la clase de objeto
+    geomético dependiendo de sus características geométicas, pero no
+    indica si la geometría es en 2 dimensiones o en 3 dimensiones, o si
+    soporta coordenada M o no la soporta. Para ello se ha creado el
+    concepto de subtipo que sirve para indicar la dimensión de la
+    geometría.<br>
+    <br>
+    Los tipos de geometrías actualmente soportados por gvSIG se
+    encuentran definidos en TYPES y son:<br>
+    <ul>
+      <li> Geometrías simples</li>
+      <ul>
+        <li> AGGREGATE: Un conjunto que puede contener Puntos, líneas y
+          polígonos </li>
+        <li>LINE | CURVE: Una geometría recta o curva continua e
+          indefinida de puntos. Puede usarse indistintamente la
+          constante LINE o CURVE, representan el mismo tipo de
+          geometría.</li>
+        <li>POINT: Figura geométrica adimensional: no tiene longitud,
+          área, volumen, ni otro ángulo dimensional. Describe una
+          posición en el espacio, determinada respecto de un sistema de
+          coordenadas preestablecido. </li>
+        <li>POLYGON | SURFACE: Figura plana compuesta por una secuencia
+          finita de segmentos rectos consecutivos que cierran una región
+          en el espacio. Puede usarse indistintamente la constante LINE
+          o CURVE, representan el mismo tipo de geometría. </li>
+      </ul>
+      <li> Geometrías multiples</li>
+      <ul>
+        <li>MULTICURVE: Conjunto de lineas (ya sean curvas o rectas) </li>
+        <li>MULTIPOINT: Conjunto de puntos </li>
+        <li> MULTISURFACE: Conjunto de superficies </li>
+      </ul>
+    </ul>
+    Los subtipos de gvSIG se encuentran definidos en SUBTYPES y son<br>
+    <br>
+    <ul>
+      <li> D2 (GEOM2D): Geometrías de 2 dimensiones </li>
+      <li> D2M (GEOM2DM): Geometrías de 2 dimensiones y con coordenada M
+      </li>
+      <li> D3 (GEOM3D): Geometrías de 3 dimensiones</li>
+      <li>D3M (GEOM3DM): Geometrías de 3 dimensiones y con coordenada M
+        <br>
+      </li>
+    </ul>
+    <h2>Creación de geometrías</h2>
+    Dentro del entorno de scripting en gvSIG, se ha creado un módulo,
+    geom.py, que simplifica algunas de las operaciones más habituales
+    con las geometrías.<br>
+    Para crear una geometría debemos importar en nuestro script el
+    módulo 'geom' e invocar a la función createGeometry indicando el
+    tipo y el subtipo de la nueva geometría.<br>
+    <br>
+    <blockquote>
+      <pre>from geom import *
+def main():
+&nbsp; geometry = createGeometry(POINT, D2) </pre>
+    </blockquote>
+    La geometría así creada es una geometría de tipo punto y subtipo 2d
+    vacía.<br>
+    <h2>Geometría de tipo Punto. Función createPoint</h2>
+    Podemos crear una geometría de tipo <a
+      href="../../../javadocs/html/org/gvsig/fmap/geom/primitive/Point.html">punto</a>
+    (POINT) mediante la función createPoint del módulo geom que devuelve
+    una geometría y cuya sintaxis es:<br>
+    <pre>    createPoint([x, y][, subtype])</pre>
+    <ul>
+      <li> createPoint(x, y, subtype)</li>
+      <ul>
+        <li> x, double (opcional): Valor de la coordenada X del punto.
+          El valor por defecto es 0.0 </li>
+        <li> y, double (opcional): Valor de la coordenada Y del punto.
+          El valor por defecto es 0.0 </li>
+        <li> subtype, int (opcional): Indica las dimensiones de la
+          geometría y si soporta coordenada z. El valor por defecto es
+          D2 </li>
+      </ul>
+    </ul>
+    Los métodos más habituales de una geometría de tipo punto son:<br>
+    <ul>
+      <li> getCoordinateAt(dimension): Obtine el valor de la coordenada
+        en una dimensión concreta.</li>
+      <ul>
+        <li> dimension, int: Dimensión de la que obtener la coordenada </li>
+      </ul>
+      <li> getX(): Devuelve el valor de la coordenada X </li>
+      <li> getY(): Devuelve el valor de la coordenada Y </li>
+      <li> setCoordinateAt(dimension, value): Establece el valor de una
+        dimensión concreta <br>
+      </li>
+      <ul>
+        <li>dimension, int: Dimensión sobre la que se establece la
+          coordenada </li>
+        <li> value, double: Valor a asignar a la coordenada </li>
+      </ul>
+      <li> setX(x): Establece el valor de la coordenada X</li>
+      <ul>
+        <li> x, double: Valor a asignar a la coordenada X </li>
+      </ul>
+      <li> setY(y): Establece el valor de la coordenada Y</li>
+      <ul>
+        <li> y, double: Valor a asignar a la coordenada Y </li>
+      </ul>
+    </ul>
+    Supongamos que tenemos una geometría de tipo punto y queremos
+    obtener sus coordenadas "x" e "y" para poder crear otra geometría de
+    tipo pùnto con esos valores.<br>
+    <pre>    from geom import *
+    def main():
+      # codigo ...
+      x = point.getX()
+      y = point.getY()
+      newPoint = createPoint(x,y)</pre>
+    <br>
+    Para editar o recuperar el resto de valores de las otras dimensiones
+    hay que utilizar los métodos genéricos setCoordinateAt y
+    getCoordinateAt.<br>
+    Por ejemplo, para crear un punto en 3 dimensiones cuyas coordenadas
+    sean 1,1,5 hay que ejecutar el siguiente código:<br>
+    <pre>    point = createGeometry(POINT, D3)
+    point.setCoordinateAt(0, 1)
+    point.setCoordinateAt(1, 1)
+    point.setCoordinateAt(2, 5)</pre>
+    <br>
+    Otra opción podría ser hacerlo utilizando los métodos setX() y
+    setY() de la geometría y el método setCoordinateAt(dimension, value)
+    y el punto obtenido sería el mismo:<br>
+    <pre>    point = createGeometry(POINT, D3)
+    point.setX(1)
+    point.setY(1)
+    point.setCoordinateAt(2, 5)</pre>
+    <br>
+    Para obtener información más completa sobre los métodos de una
+    geometría de tipo punto, puede&nbsp; consultarse la documentación de
+    la geometría de tipo <a
+      href="../../../javadocs/html/org/gvsig/fmap/geom/primitive/Point.html">Punto</a><br>
+    <h2> Geometrías de tipo Polygon. Función createPolygon</h2>
+    La función createPolygon del módulo geom, nos permite crear una
+    geometría de tipo polígono (POLYGON) de forma rápida.<br>
+    La sintaxis de la función es<br>
+    <pre>    createPolygon([subtype])</pre>
+    <ul>
+      <li>createPolygon(subtype): Crea una geometría de tipo polígono.</li>
+      <ul>
+        <li>subtype, int (opcional): Indica las dimensiones de la
+          geometría y si soporta coordenada z. El valor por defecto es
+          D2 <br>
+        </li>
+      </ul>
+    </ul>
+    <br>
+    Los métodos comunes de estas geometrías son:<br>
+    <ul>
+      <li> addVertex(point): Añade un vértice a la geometría</li>
+      <ul>
+        <li> point, Point: Geometría de tipo punto a añadir al polígono
+        </li>
+      </ul>
+      <li> closePrimitive(): Cierra la geometría </li>
+      <li> getBounds(): Rectangle Devuelve el límite rectangular de la
+        geometría. </li>
+      <li> getCoordinateAt(int index, int dimension): Obtiene el valor
+        de la coordenada de una dimensión concreta </li>
+      <li> getEnvelope(): Devuleve el bounding box mínimo de la
+        geometría </li>
+      <li> getNumVertices(): Devuelve el número de vértices de la
+        geometría </li>
+      <li> getVertex(int index): Devuelve una geometría de tipo punto
+        del vértice index de la geometría </li>
+    </ul>
+    <br>
+    Un ejemplo, el siguiente código crea una geometría de tipo polígono,
+    a la que añade 4 vértices.<br>
+    <pre>    from geom import *
+    def main():
+      polygon = createPolygon(D2M)
+      x = (1, 1, 5, 5)
+      y = (1, 5, 5, 1)
+      points = [createPoint(p[0], p[1]) for p in zip(x, y)]
+      for point in points:
+        polygon.addVertex(point)
+      polygon.closePrimitive()</pre>
+    <pre>    </pre>
+    <h2> Geometría de tipo Línea. Función createLine</h2>
+    La función createLine del módulo geom, nos permite crear una
+    geometría de tipo línea de forma rápida.<br>
+    La sintaxis de la función es<br>
+    <pre>    createLine([subtype])</pre>
+    <ul>
+      <li> createLine(subtype): Crea una geometría de tipo línea (LINE).</li>
+      <ul>
+        <li> subtype, int (opcional): Indica las dimensiones de la
+          geometría y si soporta coordenada z. El valor por defecto es
+          D2 </li>
+      </ul>
+    </ul>
+    Los métodos comunes de estas geometrías son:<br>
+    <ul>
+      <li> addVertex(point): Añade un vértice a la geometría</li>
+      <ul>
+        <li>point, Point: Geometría de tipo punto a añadir al polígono </li>
+      </ul>
+      <li> closePrimitive(): Cierra la geometría </li>
+      <li> getBounds(): Rectangle Devuelve el límite rectangular de la
+        geometría. </li>
+      <li> getCoordinateAt(int index, int dimension): Obtiene el valor
+        de la coordenada de una dimensión concreta </li>
+      <li> getEnvelope(): Devuleve el bounding box mínimo de la
+        geometría </li>
+      <li> getNumVertices(): Devuelve el número de vértices de la
+        geometría </li>
+      <li> getVertex(int index): Devuelve una geometría de tipo punto
+        del vértice index de la geometrías </li>
+    </ul>
+    <h2> Geometría de tipo Multipunto. Función createMultiPoint</h2>
+    Las geometrías MULTIPOINT, son geometrías que contienen a su vez una
+    colección de geometrías de tipo POINT.<br>
+    Podemos crear una geometría de tipo MULTIPOINT invocando a la
+    función createMultiPoint, indicando el subtipo de geometría que
+    queremos crear.<br>
+    <pre>    createMultiPoint([subtype])</pre>
+    <ul>
+      <li> &nbsp;createMultiPoint(subtype): Crea una geometría de tipo
+        MULTIPOINT</li>
+      <ul>
+        <li>subtype, int: Subtipo de la geometría </li>
+      </ul>
+    </ul>
+    El siguiente código crea una geometría de tipo MULTIPOINT y añade 6
+    geometrías de tipo POINT<br>
+    <pre>    from geom import *
+    def main():
+      multipoint = createMultiPoint(subtype=D2)
+      x = (1, 1, 5, 5, 10, 0)
+      y = (1, 5, 5, 1, 10, 10)
+      points = [createPoint(p[0], p[1]) for p in zip(x, y)]
+      for point in points:
+        multipoint.addPoint(point)</pre>
+    También pueden añadirse puntos a la geometría MULTIPOINT pasando
+    como parámetros dos listas, una con las coordenadas X y otra con las
+    coordenadas Y de los puntos que van a formar la multigeometría.<br>
+    <pre>    from geom import *
+    def main():
+      multipoint = createMultiPoint(subtype=D2)
+      x = (1, 1, 5, 5, 10, 0)
+      y = (1, 5, 5, 1, 10, 10)
+      multipoint.setPoints(x, y)</pre>
+    <br>
+    Los métodos de la clase MULTIPOINT son:<br>
+    ­ <br>
+    <ul>
+      <li> addPoint(Point point): Añade una geometría de tipo POINT a la
+        multigeometría</li>
+      <ul>
+        <li>Point point: punto a añadir en la geometría </li>
+      </ul>
+      <li> cloneGeometry(): Crea una copia de esta geometría. </li>
+      <li> getEnvelope(): Devuleve la mínima envolvente de la geometría.
+      </li>
+      <li> getPrimitivesNumber(): Devuleve el número de geometrías que
+        forman la multigeometría </li>
+      <li> setPoints(double[] xCoords, double[] yCoords): Inserta en la
+        multigeometría los puntos correspondientes.</li>
+      <ul>
+        <li> double[] xCoords: Lista de coordenadas X de los puntos </li>
+        <li> double[] yCoords: Lista de coordenadas Y de los puntos </li>
+      </ul>
+      <li> getPointAt(int index): devuelve el punto de una posición
+        concreta de la multigeometría</li>
+      <ul>
+        <li> int index: posición del punto </li>
+      </ul>
+    </ul>
+    <h2>Geometría de tipo Multilínea. Función createMultiLine</h2>
+    Las geometrías MULTILINE, son geometrías que contienen a su vez una
+    colección de geometrías de tipo LINE.<br>
+    Podemos crear una geometría de tipo MULTILINE invocando a la función
+    createMultiLine, indicando el subtipo de geometría que queremos
+    crear.<br>
+    <pre>    createMultiLine([subtype])</pre>
+    <ul>
+      <li> createMultiLine(subtype): Crea una geometría de tipo
+        MULTILINE</li>
+      <ul>
+        <li> • subtype, int: Subtipo de la geometría </li>
+      </ul>
+    </ul>
+    Los métodos de la clase MULTILINE son:<br>
+    ­ <br>
+    <ul>
+      <li> addCurve(line): Añade una nueva línea (LINE) a la
+        multigeometría</li>
+      <ul>
+        <li> LINE line: Línea que se añade </li>
+      </ul>
+      <li> getCurveAt(index): Devuleve una línea LINE de una posición
+        concreta de la multigeometría</li>
+      <ul>
+        <li> int index: Posición de la línea dentro de la multigeometría
+        </li>
+      </ul>
+      <li> cloneGeometry(): Crea una copia de esta geometría. </li>
+      <li> getEnvelope(): Devuleve la mínima envolvente de la geometría.
+      </li>
+      <li> getPrimitivesNumber(): Devuelve el número de geometrías que
+        forman la multigeometría </li>
+    </ul>
+    <h2> Geometría de tipo Multipolígono. Función createMultiPolygon<br>
+    </h2>
+    Las geometrías MULTIPOLYGON, son geometrías que contienen a su vez
+    una colección de geometrías de tipo POLYGON.<br>
+    Podemos crear una geometría de tipo MULTIPOLYGON invocando a la
+    función createMultiPolygon, indicando el subtipo de geometría que
+    queremos crear.<br>
+    <pre>    createMultiPolygon([subtype])</pre>
+    <ul>
+      <li>&nbsp;createMultiPolygon(subtype): Crea una geometría de tipo
+        MULTILINE</li>
+      <ul>
+        <li> subtype, int: Subtipo de la geometría </li>
+      </ul>
+    </ul>
+    Los métodos de la clase MULTIPOLYGON son:<br>
+    <ul>
+      <li> ­ addSurface(polygon): Añade un nuevo polígono (POLYGON) a la
+        multigeometría</li>
+      <ul>
+        <li> POLYGON polygon: Polígono que se añade </li>
+      </ul>
+      <li> getSurfaceAt(index): Devuelve un polígono (POLYGON) de una
+        posición concreta de la </li>
+      <li> multigeometría</li>
+      <ul>
+        <li> int index: Posición de la línea dentro de la multigeometría
+        </li>
+      </ul>
+      <li> cloneGeometry(): Crea una copia de esta geometría. </li>
+      <li> getEnvelope(): Devuleve la mínima envolvente de la geometría.
+      </li>
+      <li> getPrimitivesNumber(): Devuelve el número de geometrías que
+        forman la multigeometría </li>
+    </ul>
+    <h2>Operaciones con geometrías</h2>
+    <ul>
+      <li> area(): Devuelve el área de la geometría </li>
+      <li> centroid(): Devuelve el centroide de la geometría </li>
+      <li> perimeter(): Devuelve el perímetro de la geometría </li>
+      <li> getEnvelope(): Devuelve el Bounding Box mínimo de la
+        geometría </li>
+      <li> buffer(distance): Devuelve la geometría resultante de
+        calcular un área alrededor de la geometría utilzando la
+        distancia del parámetro.</li>
+      <ul>
+        <li> distance, double: radio del buffer. </li>
+      </ul>
+      <li> convexHull(): Devuelve la envolvente convexa de la geometría
+      </li>
+      <li> distance(geometry): Devuelve la distancia mínima entre la
+        geometría y la geometría del parámetro.</li>
+      <ul>
+        <li> geometry, Geometry: Geometría distante </li>
+      </ul>
+      <li> intersection(other): Devulve la geometría resultante de la
+        intersección</li>
+      <ul>
+        <li> other, Geometry: Geometría sobre la que se busca la
+          intersección </li>
+      </ul>
+      <li> intersects(geometry): Devuleve True si ambas geometrías
+        intersectan</li>
+      <ul>
+        <li> geometry, Geometry: Geometría a comprobar </li>
+      </ul>
+      <li> closestPoints(geometry): Devuelve los puntos más cercanos de
+        las respectivas geometrías</li>
+      <ul>
+        <li> geometry[], Geometry: Puntos (POINT) más cercanos de cada
+          una de las geometrías </li>
+      </ul>
+    </ul>
+    para mas información puede consultarse el <a
+      href="../../../javadocs/html/org/gvsig/fmap/geom/Geometry.html">API
+
+
+
+      de geometrías </a>de gvSIG<br>
+    <br>
+  </body>
+</html>

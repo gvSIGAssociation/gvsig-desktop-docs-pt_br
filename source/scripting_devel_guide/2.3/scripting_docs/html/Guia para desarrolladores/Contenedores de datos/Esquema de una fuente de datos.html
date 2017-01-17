@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Esquema de una fuente de datos</title>
+  </head>
+  <body>
+    <h2>Esquema de una fuente de datos vectorial<br>
+    </h2>
+    Como ya hemos indicado hay 2 objetos que son considerados "fuentes
+    de datos tabulares" y cuyo comportamiento en cuanto a la gestión de
+    sus colecciones de datos es idéntica. Estos objetos son Layer y
+    Table. La primera representa una Capa de la Vista y la segunda un
+    documento de tipo Tabla. Ambos objetos contienen registros y la
+    principal diferencia entre ellos respecto los datos que contienen es
+    que un registro de una capa contiene un campo 'GEOMETRY'.<br>
+    Hemos visto como acceder a los objetos Table y Layer tanto a través
+    de las funciones currentTable() y currentLayer() y a través del
+    objeto Project, mediante el método getTable, y del objeto Vista
+    mediante el método getLayer(), respectivamente.<br>
+    A continuación vamos a centrarnos en obtener la definición o
+    estructura de los datos así como a obtener los registros de las
+    colecciones.<br>
+    <h2>La definición de los datos, el objeto Schema</h2>
+    La definición de datos de una fuente tabular se representa con el
+    objeto Schema. Este objeto contiene la definición de la estructura
+    de datos y los métodos necesarios para su gestión.<br>
+    Los métodos principales son<br>
+    <br>
+    <ul>
+      <li>modify(): Establece el modo edición a la estructura de datos.
+        Antes de añadir o modificar una propiedad es necesario activar
+        el modo edición.</li>
+      <li>append(name, type[, size][, default][, precision]): Añade una
+        propiedad a la definición de losdatos. Si la definición de datos
+        no está en modo edición al invocar este método se activará.</li>
+      <ul>
+        <li>name, string: Nombre de la propiedad</li>
+        <li>type, string: Tipo de dato que va a contener. Los valores
+          admitidos más usuales son:</li>
+        <ul>
+          <li>"BOOLEAN" </li>
+          <li>"DOUBLE" </li>
+          <li>"FLOAT" </li>
+          <li>"INTEGER" </li>
+          <li>"LONG" </li>
+          <li>"STRING" </li>
+          <li>"GEOMETRY" </li>
+        </ul>
+      </ul>
+    </ul>
+    <blockquote>
+      <blockquote>Existen más tipos de datos que pueden usarse y puedes
+        consultarlos en la documentación de los <a
+          href="../../../../dal/html/org/gvsig/fmap/dal/DataTypes.html">DataTypes</a></blockquote>
+    </blockquote>
+    <ul>
+      <ul>
+        <li>size, int (opcional): Tamaño de la propiedad. Determina el
+          tamaño máximo de los datos de tipo string. También se utiliza
+          en la representación del dato.</li>
+        <li>default, object (opcional): Valor por defecto de la
+          propiedad si no se indica ningún otro.</li>
+        <li>precision, int (opcional): Establece el número de decimales
+          del tipo de datos, si este es numérico y admite decimales.</li>
+      </ul>
+      <li>get(name, default): Devuelve el descriptor del atributo ( <a
+href="../../../../dal/html/org/gvsig/fmap/dal/feature/FeatureAttributeDescriptor.html">FeatureAttributeDescriptor</a>
+        ) cuyo nombre se haya pasado como parámetro si existe en la
+        definición. En caso contrario devuelve el objeto que se haya
+        pasado como parámetro (default) o None en caso de que se haya
+        omitido.</li>
+      <ul>
+        <li>name, string: nombre de la propiedad </li>
+        <li>default, object (opcional): valor por defecto que devuelve
+          en caso de que no exista la propiedad en la definición de los
+          datos. </li>
+      </ul>
+      <li>getAttrNames(): Devuelve una lista con los nombres de las
+        propiedades</li>
+      <li>getCopy(): Devuelve una copia de la definición de datos</li>
+    </ul>
+    <h3>Obtener la definición de datos de una fuente de datos</h3>
+    Si deseamos obtener la definición de datos de una fuente tabular
+    basta con invocar al método getSchema de la fuente.<br>
+    <blockquote>
+      <pre style="background-color: lightgrey;">  schemaTable = currentTable().getSchema()
+  schemaLayer = currentLayer().getSchema()
+     </pre>
+    </blockquote>
+    <blockquote><i>Estas líneas de código no pueden estar juntas porque
+        sólo una de ellas será el&nbsp; elemento activo.</i><br>
+    </blockquote>
+    <h2>Modificar una definición de datos</h2>
+    <h3>Añadir campos a una definición de datos, el método append</h3>
+    El método append de una definición de datos nos permite añadir un
+    atributo nuevo a la definición de los datos y definir sus
+    propiedades. Si la definición de datos no está en modo edición al
+    invocar este método se activará.<br>
+    <blockquote>
+      <pre>schema.append(name, type[, size][, default][, precision])</pre>
+    </blockquote>
+    <ul>
+      <li>name, string: Nombre de la propiedad </li>
+      <li>type, string: Tipo de dato que va a contener. Los valores
+        admitidos más usuales son:</li>
+      <ul>
+        <li>"BOOLEAN" </li>
+        <li>"DOUBLE" </li>
+        <li>"FLOAT" </li>
+        <li>"INTEGER" </li>
+        <li>"LONG" </li>
+        <li>"STRING" </li>
+        <li>"GEOMETRY" </li>
+      </ul>
+    </ul>
+    <blockquote>Existen más tipos de datos que pueden usarse y puedes
+      consultarlos en la documentación de los DataTypes<br>
+    </blockquote>
+    <ul>
+      <li>size, int (opcional): Tamaño de la propiedad. Determina el
+        tamaño máximo de los datos de tipo string. También se utiliza en
+        la representación del dato. </li>
+    </ul>
+    <blockquote><i>El valor por defecto del atributo size es 1 por lo
+        que es recomendable indicar el tamaño del campo.</i></blockquote>
+    <ul>
+      <li>default, object (opcional): Valor por defecto de la propiedad
+        si no se indica ningún otro. </li>
+      <li>precision, int (opcional): Establece el número de decimales
+        del tipo de datos, si este esnumérico y admite decimales. </li>
+    </ul>
+    <blockquote><i>El valor por defecto del atributo precision es 4, por
+        lo que si necesitamos una precisión mayor será necesario
+        indicarlo.</i><br>
+    </blockquote>
+    Por ejemplo, queremos añadir a una definición de datos un campo
+    llamado "ID" de tipo LONG<br>
+    <br>
+    <blockquote>
+      <pre style="background-color: lightgrey;">  import gvsig
+  def main():
+    schema = gvsig.currentLayer().getSchema()
+    schema.append("ID", "LONG", size=10)
+    gvsig.currentLayer().edit()  
+    gvsig.currentLayer().updateSchema(schema)
+    gvsig.currentLayer().commit()
+</pre>
+    </blockquote>
+    <br>
+    <blockquote><i>El contenedor de datos debe estar en modo edición, y
+        para que los cambios&nbsp; surtan efecto en el contenedor de
+        datos hay que actualizar este usando el&nbsp; método
+        updateSchema.</i><br>
+    </blockquote>
+    Veamos un ejemplo completo, vamos a añadir un campo nuevo a una capa
+    que tiene 2 atributos llamados, campo1 y GEOMETRY<br>
+    <blockquote>
+      <pre style="background-color: lightgrey;"><b>Jython Completion Shell
+Jython 2.5.2 (Release_2_5_2:7206, Mar 2 2011, 23:12:06)
+[Java HotSpot(TM) Server VM (Sun Microsystems Inc.)] on java1.6.0_26
+&gt;&gt;&gt;</b>
+&gt;&gt;&gt; from gvsig import *
+&gt;&gt;&gt; schema = currentLayer().getSchema()
+&gt;&gt;&gt; schema.getAttrNames()
+<font color="#000099">[u'campo1', u'GEOMETRY']</font>
+&gt;&gt;&gt; schema.append('ID','INTEGER')
+org.gvsig.fmap.dal.feature.impl.DefaultEditableFeatureAttributeDescriptor@4f4458
+&gt;&gt;&gt;
+<font color="#006600">#El campo que acabamos de añadir está en la definición de datos</font>
+&gt;&gt;&gt; schema.getAttrNames()
+<font color="#000099">[u'campo1', u'GEOMETRY', u'ID']</font>
+&gt;&gt;&gt; <font color="#006600">#El campo que acabamos de añadir no está en la definición de datos de</font>
+&gt;&gt;&gt; <font color="#006600">#la capa</font>
+&gt;&gt;&gt; currentLayer().getSchema().getAttrNames()
+<font color="#000099">[u'campo1', u'GEOMETRY']</font>
+&gt;&gt;&gt; <font color="#006600">#Se produce un error porque la capa no está en edición</font>
+&gt;&gt;&gt; currentLayer().updateSchema(schema)
+<font color="#660000">Traceback (most recent call last)<br></font><font color="#660000">File "&lt;input&gt;", line 1, in &lt;module&gt;</font>
+<font color="#660000">File "....</font>
+&gt;&gt;&gt; currentLayer().edit()
+&gt;&gt;&gt; currentLayer().updateSchema(schema)
+&gt;&gt;&gt; currentLayer().getSchema().getAttrNames()
+<font color="#000099">[u'campo1', u'GEOMETRY', u'ID']<br></font>&gt;&gt;&gt; currentLayer().commit()<br>&gt;&gt;&gt; </pre>
+    </blockquote>
+    <h3>Eliminar campos de una definición de datos. El método remove.</h3>
+    Este método nos permite eliminar uno de los atributos de la fuente
+    de datos. A diferencia del método append la definición de datos debe
+    estar en modo edición antes de invocar al método remove.<br>
+    <blockquote><i>El contenedor de datos debe estar en modo edición
+        para realizar los cambios</i><br>
+    </blockquote>
+    La sintaxis es:<br>
+    <pre style="background-color: lightgrey;">schema.remove(name)</pre>
+    <ul>
+      <li>name, string: Nombre de la propiedad que queremos elimina</li>
+    </ul>
+    Por ejemplo, queremos eliminar un campo llamado “campo1”.<br>
+    <pre style="background-color: lightgrey;">  import gvsig
+  def main():
+    schema = gvsig.currentLayer().getSchema()
+    schema.modify() #El schema debe estar en modo edicion
+    schema.remove("campo1")
+    gvsig.currentLayer().updateSchema(schema)
+    gvsig.currentLayer().commit()
+</pre>
+    Siguiendo con el ejemplo anterior en la terminal ahora queremos
+    eliminar el atributo llamado campo1.<br>
+    <blockquote>
+      <pre>&gt;&gt;&gt; currentLayer().isEditing()</pre>
+      <pre>False</pre>
+      <pre>&gt;&gt;&gt; currentLayer().getSchema().getAttrNames()</pre>
+      <pre>[u'campo1', u'ID', u'GEOMETRY']</pre>
+      <pre>&gt;&gt;&gt; #No se puede eliminar el campo porque el schema no está en edición</pre>
+      <pre>&gt;&gt;&gt; schema = currentLayer().getSchema()</pre>
+      <pre>&gt;&gt;&gt; schema.remove('campo1')</pre>
+      <pre>False</pre>
+      <pre>&gt;&gt;&gt; schema.modify()</pre>
+      <pre>&gt;&gt;&gt; #Elimina el campo porque el schema está en edición</pre>
+      <pre>&gt;&gt;&gt; schema.remove('campo1')</pre>
+      <pre>org.gvsig.fmap.dal.feature.impl.DefaultEditableFeatureAttributeDescriptor@c863dd</pre>
+      <pre>&gt;&gt;&gt; #La capa no refleja los cambios</pre>
+      <pre>&gt;&gt;&gt; currentLayer().getSchema().getAttrNames()</pre>
+      <pre>[u'campo1', u'ID', u'GEOMETRY']</pre>
+      <pre>&gt;&gt;&gt; currentLayer().edit()</pre>
+      <pre>&gt;&gt;&gt; #Actualizamos la capa</pre>
+      <pre>&gt;&gt;&gt; currentLayer().updateSchema(schema)</pre>
+      <pre>&gt;&gt;&gt; currentLayer().getSchema().getAttrNames()</pre>
+      <pre>[u'ID', u'GEOMETRY']</pre>
+      <pre>&gt;&gt;&gt; #Terminamos la edición de la capa</pre>
+      <pre>&gt;&gt;&gt; currentLayer().commit()</pre>
+    </blockquote>
+    <h2>4 El objeto FeatureAttributeDescriptor</h2>
+    Ya hemos visto que el método get del objeto Schema nos devuelve un
+    objeto <a
+href="../../../../javadocs/html/org/gvsig/fmap/dal/feature/FeatureAttributeDescriptor.html">FeatureAttributeDescriptor,</a>
+    este objeto contiene información sobre uno de los atributos de los
+    fenómenos, como el nombre, el tipo de dato que admite, o su
+    precisión.<br>
+    Los métodos más usados son<br>
+    <ul>
+      <li>getDataTypeName(): Devuelve el nombre del tipo de dato del
+        atributo. </li>
+      <li>getGeomType(): Devuelve el tipo de geometría del atributo si
+        es una geometría. </li>
+      <li>getIndex(): Devuelve la posición relativa del atributo dentro
+        del fenómeno. </li>
+      <li>getPrecision(): Para atributos cuyo tipo de dato admita
+        decimales, devuelve el máximo número de decimales. </li>
+      <li>getDefaultValue(): Devuelve el valor por defecto de la
+        propiedad. </li>
+    </ul>
+  </body>
+</html>

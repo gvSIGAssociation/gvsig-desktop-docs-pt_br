@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Tablas y capas</title>
+  </head>
+  <body>
+    <h2>Tablas y capas</h2>
+    Existen 2 objetos que tienen como característica común que almacenan
+    los datos, pese a que tienen grandes diferencias. Estos objetos son,
+    la Tabla (se corresponde con el objeto java TableDocument) y la Capa
+    (se corresponde con el objeto java FLayer). Hay que resaltar que
+    pese a que comparten los métodos de gestión de los datos son objetos
+    diferentes, por lo que el resto de propiedades no es el mismo.
+    Veámoslo con un ejemplo. Cargamos un documento Tabla desde el gestor
+    de proyectos de gvSIG, que se corresponda con un archivo dbf de un
+    shape. A continuación abrimos ese shape en una vista, y abrimos su
+    tabla de atributos. En el gestor de proyectos si comprobamos los
+    documentos tabla, aparecen 2 documentos, cuyos nombres no coinciden
+    y cuyos atributos tampoco (el documento que hemos abierto como un
+    documento Tabla no tiene campo GEOMETRY), peseque son el mismo
+    archivo dbf.<br>
+    <br>
+    Abriendo cada uno de los elementos desde la consola de Jython
+    podemos ver que son diferentes<br>
+    <blockquote>
+      <pre>Jython Completion Shell</pre>
+      <pre>Jython 2.5.2 (Release_2_5_2:7206, Mar 2 2011, 23:12:06) </pre>
+      <pre>[Java HotSpot(TM) Server VM (Sun Microsystems Inc.)] on java1.6.0_26</pre>
+      <pre>&gt;&gt;&gt; from gvsig import *</pre>
+      <pre>&gt;&gt;&gt; currentTable().getName()</pre>
+      <pre>u'areaDeInfluencia'</pre>
+      <pre>&gt;&gt;&gt; currentTable().getSchema().getAttrNames()</pre>
+      <pre>[u'Id_muni', u'Influencia']</pre>
+      <pre>&gt;&gt;&gt; currentTable().getName()</pre>
+      <pre>u'Tabla de atributos: areaDeInfluencia.shp'</pre>
+      <pre>&gt;&gt;&gt; currentTable().getSchema().getAttrNames()</pre>
+      <pre>[u'Id_muni', u'Influencia', u'GEOMETRY']</pre>
+      <pre>&gt;&gt;&gt; <br></pre>
+    </blockquote>
+    Como hemos dicho, tanto la Capa como la Tabla contienen un conjunto
+    de datos o registros, la diferencia, respecto sus datos, es que en
+    la capa existe el campo "geometry", que es la definición del
+    elemento cartográfico, y la tabla no, por lo que los métodos de
+    gestión de sus colecciones de datos son los mismos.<br>
+    Estos métodos son:<br>
+    ­<br>
+    <ul>
+      <li>features([expresion][, sortBy][, asc]): Devuelve la colección
+        de datos.</li>
+      <ul>
+        <li>expresion, string (opcional): Condición que tiene que
+          cumplir el fenómeno para serincluido en la colección que se
+          devuelve. </li>
+        <li>sortBy, string (opcional): Identificador del campo que se va
+          a utilizar para que seordene la colección de fenómenos que se
+          devuelve. </li>
+        <li>asc, boolean (opcional): True si se ordenan en orden
+          ascendente, False en casocontrario. Por defecto se usa True. </li>
+      </ul>
+    </ul>
+    <blockquote>El parámetro expresión de tipo string, define un filtro
+      que se evalúa para determinar si unfenómeno debe ser incluido en
+      la colección que se devuelve. Por ejemplo:</blockquote>
+    <blockquote>
+      <blockquote>
+        <pre>expresion = "ID &gt; 10 AND ID &lt; 20"</pre>
+        <pre>features = currentLayer().features(expresion, 'ID', True)</pre>
+      </blockquote>
+      Este código devuelve la colección de fenómenos de la capa activa
+      cuyo campo ID es mayor que 10 y menor que 20, ordenado por el
+      campo ID ascendente. Si se utiliza una expresión para filtrar los
+      fenómenos y esta expresión no es válida, devuelve None. Si la
+      expresión es válida pero no produce resultados devuelve un
+      conjunto de 0 elementos.<br>
+      Si únicamente queremos ordenar la colección por un campo en
+      sentido descendente el código sería:<br>
+      <pre>features = currentLayer().features(sortBy='ID', asc=True)</pre>
+    </blockquote>
+    <ul>
+      <li>edit(): Activa el modo edición del objeto. Es necesario que el
+        objeto esté en edición tantopara actualizar como para añadir
+        objetos nuevos a la colección de datos. Una vez que no se
+        necesite hacer cambios será necesario invocar a los métodos
+        commit si sequieren persistir los cambios o abort si no se
+        quieren guardar.</li>
+      <li>append(values): Crea un nuevo fenómeno y lo añade a la
+        colección de datos</li>
+      <ul>
+        <li>&nbsp;values, dict: Añade en la propiedad key del fenómeno,
+          el valor correspondiente. </li>
+      </ul>
+    </ul>
+    <blockquote>Si el objeto no está en estado de edición al usar este
+      método se cambiará el estado a modo edición.</blockquote>
+    <ul>
+      <li>updateSchema(schema): Actualiza el modelo de datos del objeto
+        con el nuevo modelo que se pasa como parámetro. El objeto debe
+        estar en modo edición.</li>
+      <ul>
+        <li>schema, Schema: Modelo de datos que usará la tabla o capa</li>
+      </ul>
+      <li>getSchema(): Devuelve el modelo de datos del objeto.</li>
+      <li>commit(): Termina el modo edición manteniendo los cambios</li>
+      <li>abort(): Termina el modo edición descartando los cambios.</li>
+      <li>getSelection(): Devuelve el subconjunto de fenómenos que estén
+        seleccionados en el objetodel total de elementos de la
+        colección. Si no hay elementos seleccionados devolverá unobjeto
+        Selection con 0 fenómenos</li>
+      <li>select(selection): Añade un fenómeno o un conjunto de ellos a
+        la selección.</li>
+      <ul>
+        <li>selection, Feature, FeatureSet: El parámetro selection puede
+          ser un fenómeno (Feature) o un conjunto de fenómenos
+          (FeatureSet)</li>
+      </ul>
+      <li>deselect(selection): Elimina un fenómeno o un conjunto de
+        ellos a la selección.</li>
+    </ul>
+    <ul>
+      <ul>
+        <li>selection, Feature, FeatureSet: El parámetro selection puede
+          ser un fenómeno(Feature) o un conjunto de fenómenos
+          (FeatureSet)</li>
+      </ul>
+      <li>isSelected(feature): Devuelve True si el fenómeno está
+        seleccionado.</li>
+      <ul>
+        <li>feature, Feature: Fenómeno del que queremos saber si está
+          seleccionado. </li>
+      </ul>
+    </ul>
+    <br>
+    Otros métodos comunes son:<br>
+    ­­<br>
+    <ul>
+      <li>getProjectionCode(): Devuelve un string con el código de la
+        proyección de la capa/tabla </li>
+      <li>getName(): Devuelve el nombre de la capa en la Tabla de
+        Contenidos de la vista (TOC en sus siglas en inglés, Table Of
+        Contents) </li>
+    </ul>
+    <h3>Métodos exclusivos del objeto Layer</h3>
+    <ul>
+      <li>­getTypeVectorLayer(): Devuelve el tipo de geometría de la
+        capa. </li>
+    </ul>
+    <h3>Métodos exclusivos del objeto Table</h3>
+    <ul>
+      <li>­getAssociatedLayer(): Devuelve el objeto Layer asociado a la
+        tabla de atributos o None si no existe. <br>
+      </li>
+    </ul>
+    <br>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Module commonsdialog reference</title>
+  </head>
+  <body>
+    <div class="stx">
+      <div class="section" id="module-commonsdialog">
+        <h2><span class="toc-backref">Module commonsdialog</span></h2>
+        <div class="section" id="window-message-msgbox">
+          <h3><span class="toc-backref">Window message, msgbox</span></h3>
+          <p>Shows window message with acept button only.</p>
+          <pre>msgbox(message [, title, messageType])
+</pre>
+          <ul class="simple">
+            <li><i>msgbox(message [, title, messageType])</i>
+              <ul>
+                <li>param <i>message:</i> Text to show</li>
+                <ul>
+                  <li>type message: string</li>
+                </ul>
+                <li>param <u>title</u> (optional): Window title.</li>
+                <ul>
+                  <li>type title: string</li>
+                </ul>
+                <li>param<i> messageType,</i> integer : Show window icon
+                  to emphasize message. Reconized constant values
+                  <ul>
+                    <li>FORBIDEN: Forbiden symbol</li>
+                    <li>IDEA: Lamp symbol</li>
+                    <li>WARNING: Warning symbol</li>
+                    <li>QUESTION: question symbol</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="section" id="confirm-window-confirmdialog">
+          <h3><span class="toc-backref">Confirm window, confirmDialog</span></h3>
+          <p>Shows a message to the user to choose one option</p>
+          <pre>confirmDialog(message, [title, optionType, messageType])
+</pre>
+          <ul class="simple">
+            <li><i>confirmDialog(message, [title, optionType,
+                messageType]) </i>
+              <ul>
+                <li>param <i>message:</i> Text to show</li>
+                <ul>
+                  <li><i>type</i> message: string</li>
+                </ul>
+                <li>param <i>title</i> (optional): Window title.</li>
+                <ul>
+                  <li><i>type</i> title: string</li>
+                </ul>
+                <li>param<i> optionType,</i> integer (optional): Buttons
+                  to show
+                  <ul>
+                    <li>YES_NO: Yes/no buttons.</li>
+                    <li>YES_NO_CANCEL: yes/no/cancel buttons.</li>
+                    <li>ACEPT_CANCEL: accept/cancel buttons.</li>
+                  </ul>
+                  <br>
+                  <ul>
+                  </ul>
+                </li>
+                <ul>
+                  <li>type messageType: integer</li>
+                </ul>
+                <li>param <i>messageType</i> (optional): Show window
+                  icon to emphasize message.
+                  <ul>
+                    <li>FORBIDEN: Forbiden symbol</li>
+                    <li>IDEA: Lamp symbol</li>
+                    <li>WARNING: Warning symbol</li>
+                    <li>QUESTION: question symbol</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="section" id="input-window-inputbox">
+          <h3><span class="toc-backref">Input window , inputbox</span></h3>
+          <p>Displays an input box to ask the user to enter a string</p>
+          <pre>inputbox(message, [title, messageType, initialValue])
+</pre>
+          <ul class="simple">
+            <li><i>inputbox(message, [title, messageType, initialValue])
+              </i>
+              <ul>
+                <li>param <i>message:</i> Text to show</li>
+                <ul>
+                  <li>type message: string</li>
+                </ul>
+                <li>param <i>title</i> (optional): Window title.</li>
+                <ul>
+                  <li>type messageType: integer</li>
+                </ul>
+                <li>param <i>messageType</i> (optional): Show window
+                  icon to emphasize message.
+                  <ul>
+                    <li>FORBIDEN: Forbiden symbol</li>
+                    <li>IDEA: Lamp symbol</li>
+                    <li>WARNING: Warning symbol</li>
+                    <li>QUESTION: question symbol</li>
+                  </ul>
+                </li>
+                <li>param <i>initialValue:</i> Initial text to show in
+                  the text area</li>
+                <ul>
+                  <li>type initialValue: string</li>
+                </ul>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

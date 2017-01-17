@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+  <mapID target="dialogos.estandard.html" url="html/Guia para desarrolladores/Dialogos estandard.html" />
+  <mapID target="principales.componentes.funciones.basicas.html" url="html/Guia para desarrolladores/Principales componentes/Funciones basicas.html" />
+  <mapID target="principales.componentes.funciones.basicas.ocm.html" url="html/Guia para desarrolladores/Principales componentes/Modelo de objetos simplificado.html" />
+  <mapID target="contenedores.de.datos.tablas.y.capas.html" url="html/Guia para desarrolladores/Contenedores de datos/Tablas y capas.html" />
+  <mapID target="contenedores.de.datos.esquema.de.una.fuente.de.datos.html" url="html/Guia para desarrolladores/Contenedores de datos/Esquema de una fuente de datos.html" />
+  <mapID target="contenedores.de.datos.acceso.a.los.fenomenos.de.una fuente.de.datos.tabular.html" url="html/Guia para desarrolladores/Contenedores de datos/Acceso a los fenomenos de una fuente de datos tabular.html" />
+  <mapID target="contenedores.de.datos.creacion.de.contenedores.de.datos.html" url="html/Guia para desarrolladores/Contenedores de datos/Creacion de contenedores de datos.html" />
+  <mapID target="manejo.de.geometrias.html" url="html/Guia para desarrolladores/Manejo de geometrias.html" />
+  
+  <mapID target="modulo.commonsdialog.html" url="html/Guia de referencia/Module commonsdialog.html" />
+  <mapID target="modulo.gvsig.documentos.gvsig.html" url="html/Guia de referencia/Module gvsig/gvSIG Documents.html" />
+  <mapID target="modulo.gvsig.datos.vectoriales.html" url="html/Guia de referencia/Module gvsig/Vectorial data.html" />
+  <mapID target="modulo.gvsig.simbologia.html" url="html/Guia de referencia/Module gvsig/Simbology.html" />
+  <mapID target="modulo.geom.html" url="html/Guia de referencia/Module geom.html" />
+</map>

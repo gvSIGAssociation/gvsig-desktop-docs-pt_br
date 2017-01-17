@@ -1,0 +1,169 @@
+.. _label-gvpy:
+
+gvpy: Guia de uso
+=================
+
+
+**Lançar geoprocessos a partir o Módulo de Scripting**
+
+Os geoprocessos do gvSIG e do SEXTANTE agora estão acessíveis com apenas uma linha de código e podem formar parte dos teus scripts. Poderás executá-los a partir do terminal Jython ou a partir do Editor de Scripts, localizados ambos dentro do módulo de Scripting. Este módulo de programação somente está disponível da versão gvSIG 2.x em diante.
+
+.. note::
+
+        Já que existe a possibilidade de gerar geoprocessos e incorporá-los à caixa de ferramentas através de Scripting, estes geoprocessos também serão acessíveis a partir do gvpy.
+
+Contenidos
+----------
+
+.. contents::
+
+Biblioteca gvpy
+---------------
+
+Para poder importar esta biblioteca em teus scripts a única coisa que precisas fazer é escrever no início de teu código ou no Terminal Jython::
+
+	import gvsig.libs.gvpy
+	
+ou::
+
+	from gvsig.libs import gvpy
+
+
+Isto te permitirá utilizar a biblioteca e acessar a todas suas funções. 
+
+.. note::
+	
+	Nesta documentação assumimos que estamos usado o segundo tipo de importação no início do script ou do terminal.
+
+Algoritmos
+----------
+
+Os algoritmos que estão disponíveis a partir da biblioteca de gvpy também são encontrados na Caixa de Ferramentas, podendo ser acessados em :menuselection:`Ferramentas --> Geoprocessamento --> Caixa de Ferramentas`
+
+Terás acesso tanto aos algoritmos de geoprocessamento do gvSIG como do SEXTANTE.
+
+Na Caixa de Ferramentas podemos realizar buscas de algoritmos, embora também possam ser feitas a partir do gvpy.
+
+Se abrirmos o Terminal Jython (Ferramentas-Scripting-Terminal Jython) e escrevermos `from gvsig.libs import gvpy` já poderemos acessar suas funcionalidades. Estes comandos também podem ser utilizados a partir do Editor de Scripts dentro de um script novo.
+
+Por exemplo, se queremos buscar um algoritmo que gere vetores aleatórios podemos fazer uma busca do tipo::
+
+	gvpy.algSearch("aleatórias")
+
+.. note::
+
+	A descrição dos algoritmos, tanto em gvSIG-Geoprocessos e no SEXTANTE, dependem do idioma que tenhamos instalado no gvSIG, assim, para que funcionem, as buscas deverão ser feitas neste idioma determinado.
+
+Dos resultados que nos aparecem, podemos ver um algoritmo denominado: ``randomvector``
+
+Parâmetros do algoritmo
+------------------------
+
+Se queremos conhecer mais sobre o algoritmo podemos escrever o mesmo comando que já usado anteriormente::
+
+    gvpy.algSearch("randomvector")
+
+Se a busca coincide exatamente com o nome de um algoritmo, a informação que nos mostrará o gvpy será a informação sobre esse algoritmo, sua descrição e seus parâmetros::
+
+	gvpy.algHelp("randomvector")
+	* Algorithm help: 
+	Camada vetorial com geometrias aleatórias
+	*
+	Usage: runalg( "randomvector",
+								   COUNT[Numerical Value],
+								   TYPE[Selection],
+								   RESULT[output vector layer],
+								   );
+
+
+Da mesma forma, podemos fazer a busca na **caixa de ferramentas**. Se entrarmos no algoritmo podemos ver a ajuda sobre o que faz e abaixo à esquerda aparece o nome chave do algoritmo (se não aparece, feche a janela e volte a abrir o geoprocesso).
+
+Linha de código
+---------------
+
+Agora que **conhecemos os parâmetros necessários** para executar o algoritmo, escreveremos o mesmo na forma de linha de código.
+
+Temos que **escrever gvpy** na frente para acessar à função que se encontra dentro da biblioteca. O atributo RESULT, sempre que se refira aos arquivos de saída (output vector, etc), **não deverão ser colocados**, já que estes serão gerenciados por outro parâmetro PATH que explicaremos mais adiante.
+
+Exemplo::
+	
+	gvpy.runalg("randomvector", COUNT= , TYPE= )
+
+Estes parâmetros do exemplo se referem a:
+- **COUNT**: número de geometrias aleatórias que queremos gerar
+- **TYPE**: tipo de geometrias que queremos gerar (polígono/linha/ponto)
+
+Exemplo:: 
+	
+	gvpy.runalg("randomvector", COUNT=10, TYPE=0)
+
+Este algoritmo **já poderia ser executado** em nosso terminal Jython ou em nossos scripts.
+
+.. note::
+
+	Lembre-se que se não for estabelecido o atributo ADDLAYER=False deverás ter uma **VISTA aberta** para a correta execução do processo, se não o programa não saberá sobre em qual espaço trabalhar. Geralmente, antes de executar teus scripts, abra um projeto novo, abra uma vista nova, e então, acesse ao módulo de Scripting da maneira que desejes.
+
+Recomendo escrevê-lo com o formato anterior mas, também, sempre que salvarmos a ordem estabelecida pelos parâmetros, poderemos escrevê-los sem especificar que atributo é.
+
+Exemplo::
+
+	gvpy.runalg("randomvector", 10, 0)
+
+E para ser compatível com algumas funcionalidades extras, também é possível passar todos os parâmetros como texto entre aspas:
+
+Exemplo::
+
+	gvpy.runalg("randomvector", "10", "0") 
+
+Parâmetros de entrada
+---------------------
+
+Tipos de camadas / geometrias
++++++++++++++++++++++++++++++
+
+Para que não nos esqueçamos qual número corresponde a qual tipo de geometria ou de camada, existem algumas constantes dentro do gvpy para nos ajudar a recordá-las. 
+
+No exemplo anterior, o parâmetro `TYPE` que faz referência a este tipo de polígonos, podemos escrevê-lo de diferentes maneiras com a ajuda destas constantes.
+
+Tipo polígono: corresponde ao valor 0, ou também como gvpy.TYPE_POLYGON
+Tipo linha: corresponde ao valor 1, ou também como gvpy.TYPE_LINE
+Tipo ponto: corresponde ao valor 2, ou também como gvpy.TYPE_POINT
+
+Estes dois exemplos são iguais::
+
+	gvpy.runalg("randomvector",10, 0)
+	gvpy.runalg("randomvector",10, gvpy.TYPE_POLYGON)
+
+Parâmetros do tipo Camada
++++++++++++++++++++++++++
+
+Se o **algoritmo nos pede um parâmetro do tipo camada** (quer seja tabela, vetorial ou raster), teremos que carregar esta camada em uma variável e passá-la como parâmetro. 
+
+Na **biblioteca do gvsig** existem diversas formas. Podemos ver maiores informações sobre seu uso na seção de :ref:`Carregando camadas <label-cargando_camadas>`
+
+Além disso, como explico na próxima seção, **podem ser capturadas as camadas resultantes da execução de um algoritmo**, para poder ser usadas em outra seção do script ou serem passadas como parâmetro para outros geoprocessos.
+
+Parâmetros Multi input (em desenvolvimento)
++++++++++++++++++++++++++++++++++++++++++++
+
+Se são do tipo Vetor serão incluídas através de uma lista Ex. [vectorLayer1, vectorLayer2, ..... ]
+
+Parâmetros Raster + Banda
++++++++++++++++++++++++++
+
+Se são do tipo raster + banda serão incluídas com uma tupla Ex. (raster, 1)
+
+Ex. Usando multi input de rasters::
+
+	runalg("vectorizetrees", [(raster1,1), (raster2,1)], "capa1", "1.0", "1.0", "#")
+
+Parámetro Point
++++++++++++++++
+
+Pode ser passado como texto: "100.0, 150.0" ou como geometria do gvSIG `geom.createPoint(geom.D2, 100.0, 150.0)`.
+
+Parâmetros Fixed table
+++++++++++++++++++++++
+
+Devem ser adicionados como texto (string), com uma sucessão de números a modo de lista.
+Ex. ``LUT="1,1,1,0,0,0"``

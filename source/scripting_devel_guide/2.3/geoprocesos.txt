@@ -1,0 +1,400 @@
+.. _label-geoprocesos:
+
+Geoprocessos
+============
+
+Biblioteca Toolbox
+------------------
+
+Esta classe nos ajudará a gerar nossos geoprocessos para inserí-los na Caixa de Ferramentas, permitindo-nos alguns extras que serão explicados ao longo do texto.
+
+A biblioteca Toolbox encontra-se dentro de ``gvsig.libs.toolbox`` e podemos importá-la de forma similar::
+
+    from gvsig.libs.toolbox import *
+
+A classe principal que utilizaremos será ``ToolboxProcess`` que nos ajudará a extender a partir dela nosso processo, com tudo o que precisamos para gerenciá-lo e que funcione corretamente dentro da Caixa de Ferramentas.
+
+As seguintes constantes estão presentes nesta biblioteca::
+
+    SHAPE_TYPE_POINT = IVectorLayer.SHAPE_TYPE_POINT
+    SHAPE_TYPE_LINE = IVectorLayer.SHAPE_TYPE_LINE
+    SHAPE_TYPE_POLYGON = IVectorLayer.SHAPE_TYPE_POLYGON
+    SHAPE_TYPE_MIXED = IVectorLayer.SHAPE_TYPE_MIXED
+    SHAPE_TYPE_MULTIPOINT = IVectorLayer.SHAPE_TYPE_MULTIPOINT
+    SHAPE_TYPE_MULTILINE = IVectorLayer.SHAPE_TYPE_MULTILINE
+    SHAPE_TYPE_MULTIPOLYGON = IVectorLayer.SHAPE_TYPE_MULTIPOLYGON
+    SHAPE_TYPE_WRONG = IVectorLayer.SHAPE_TYPE_WRONG
+    SHAPE_TYPE_UNDEFINED = SHAPE_TYPE_WRONG
+
+    NUMERICAL_VALUE_INTEGER = AdditionalInfoNumericalValue.NUMERICAL_VALUE_INTEGER
+    NUMERICAL_VALUE_DOUBLE = AdditionalInfoNumericalValue.NUMERICAL_VALUE_DOUBLE
+    
+
+Inserir geoprocesso na Caixa de Ferramentas
+--------------------------------------------
+
+Temos a possibilidade de adicionar nossos scripts à Caixa de Ferramentas para serem acessíveis a qualquer momento, além de contar com outras vantagens como a de poder adicionar nossos scripts em modelos do Construtor de Modelos, ou executá-los a partir do gvpy como mostraremos na próxima parte.
+
+Para tanto temos que seguir a próxima tela, muito simples, criando uma classe que extende de ``ToolboxProcess``.
+
+Ao executar o próximo script, será registrado o processo na Caixa de Ferramentas, aparecendo uma janela semelhante a próxima.
+
+.. figure::  images/geo_proceso_registrado.png
+   :align:   center
+
+Exemplo 1 - XYShift, deslocamento de uma camada de pontos::
+
+	# encoding: utf-8
+
+
+	from gvsig import *
+	from gvsig.commonsdialog import *
+
+	from gvsig.libs.toolbox import *
+	from es.unex.sextante.gui import core
+	from es.unex.sextante.gui.core import NameAndIcon
+
+	class XYShift(ToolboxProcess):
+	  
+	  def defineCharacteristics(self):
+		"""
+	Nesta operação devemos definir os parâmetros de entrada e saída que nosso proceso irá precisar.
+		"""
+		# Definimos o nome com o qual será mostrado o nosso processo
+		self.setName("Testa deslocamento em X e Y")
+		
+		# Indicamos o grupo no qual aparecerá
+		self.setGroup("Vetorial")
+			
+		params = self.getParameters()
+		# Indicamos que precisamos un parâmetro LAYER, do tipo ponto e que é obrigatório
+		params.addInputVectorLayer("LAYER","Camada de entrada", SHAPE_TYPE_POINT,True)
+		# Indicamos que precisamos de um par de valores numéricos, X e Y 
+		params.addNumericalValue("X", "X_traslation",0, NUMERICAL_VALUE_DOUBLE)
+		params.addNumericalValue("Y", "Y_traslation", 0, NUMERICAL_VALUE_DOUBLE)
+		
+		# E por último indicamos que precisaremos uma camada de saída de pontos.
+		self.addOutputVectorLayer("RESULT_POINT", "XYShift_point", SHAPE_TYPE_POINT)
+
+	  def processAlgorithm(self):
+		"""
+	Esta operação é a encarregada de realizar nosso processo.
+		"""
+		features=None
+	   
+		try:
+
+		  """
+		  Recolhemos os parâmetros e criamos o conjunto de entidades associadas à camada
+		  de entrada.
+		  """
+		  params = self.getParameters()
+		  layer = params.getParameterValueAsVectorLayer("LAYER")
+		  x = params.getParameterValueAsDouble("X")
+		  y = params.getParameterValueAsDouble("Y")
+
+		  input_store = layer.getFeatureStore()
+
+		  features = input_store.getFeatureSet()
+		  """
+		  Geramos a camada de saída com a mesma estrutura que a da camada de entrada
+		  """
+		  output_store = self.buildOutPutStore(
+			features.getDefaultFeatureType(), 
+			SHAPE_TYPE_POINT,
+			"XYShift_points",
+			"RESULT_POINT"
+		  )
+
+		  """
+		  Percorremos todas as entidades de entrada, e criamos as de saída deslocando a geometria
+		  nos valores indicados por X e Y dos parâmetros.
+		  """
+		  self.setRangeOfValues(0,features.getSize())
+		  n = 0
+		  for feature in features.iterator():
+			if self.isCanceled():
+			  # Se o usuário indicar que quer cancelar o processo, abortamos.
+			  print "Processo cancelado"
+			  break
+			
+			# Incremetamos o progreso de nosso processo.
+			#self.next()
+
+			# Criamos uma nova entidade para armazenar a nossa saída.
+			newfeature = self.createNewFeature(output_store,feature)
+
+			# Deslocamos a geometria da nova entidade
+			geom = newfeature.getDefaultGeometry()
+			geom.move(x,y)
+			
+			# Salvamos a nova entidade
+			output_store.insert(newfeature)
+			n+=1
+			self.setCurValue(n)
+
+		  # Quando acabamos de percorrer as entidades terminamos a edição.
+		  output_store.finishEditing()   
+		  
+		finally:
+		  DisposeUtils.disposeQuietly(features)
+		  print "Proceso terminado %s" % self.getCommandLineName() 
+		  return True
+		
+
+	def main(*args):
+		# Criamos nosso geoprocesso
+		process = XYShift()
+		# Registramos o mesmo entre os processos disponíveis no grupo de "Scripting"
+		process.selfregister("Scripting")
+		from es.unex.sextante.gui.core import SextanteGUI
+		#SextanteGUI.addAlgorithmProvider(process.__class__)
+		from org.gvsig.geoprocess.lib.api import GeoProcessLocator
+		gm = GeoProcessLocator.getGeoProcessManager()
+
+		alg = gm.getAlgorithms()
+		for a in alg:
+			print a
+		#gm.registerGeoProcess(process)
+		
+		# Atualizamos a interface de usuário da Caixa de Ferramentas
+		process.updateToolbox()
+
+		msgbox("Incorporado o script '%s/%s/%s' na lista de geoprocessos." % (
+			"Scripting",
+			process.getGroup(),
+			process.getName()
+		  )
+		)
+
+Exemplo 2 - GridPol, malha uniforme de pontos dentro de polígonos em uma camada::
+
+    from gvsig import *
+    from gvsig import geom
+    from gvsig.commonsdialog import *
+
+    from gvsig.libs.toolbox import *
+    from es.unex.sextante.gui import core
+    from es.unex.sextante.gui.core import NameAndIcon
+
+    from es.unex.sextante.gui.core import SextanteGUI
+    from org.gvsig.geoprocess.lib.api import GeoProcessLocator
+
+    class GridPol(ToolboxProcess):
+
+    def defineCharacteristics(self):
+            """Definir os parâmetros de entrada e saída do nosso processo. """
+            # Definimos o nome com o qual será mostrado o nosso processo
+            self.setName("Grid uniforme dentro de poligonos")
+
+            # Indicamos o grupo no qual ele aparecerá
+            self.setGroup("Vetorial")
+
+            params = self.getParameters()
+            
+            # Indicamos que precisamos um parâmetro LAYER, do tipo polígono e que é obrigatório
+            params.addInputVectorLayer("LAYER","Camada de entrada", SHAPE_TYPE_POLYGON, True)
+            
+            # Indicamos que precisamos de uma distância para o grid
+            params.addNumericalValue("DISTANCEGRID", "Distância do Grid",0, NUMERICAL_VALUE_INTEGER)
+            
+            # E por último indicamos que precisaremos de uma camada de saída de pontos.
+            self.addOutputVectorLayer("RESULT_POINT", "GirdPol_point", SHAPE_TYPE_POINT)
+
+    def processAlgorithm(self):
+            """ Esta operação é a encarregada de realizar nosso processo. """
+            features=None
+
+            try:
+
+                """
+                Coletamos os parâmetros e criamos o conjunto de entidades associadas à camada
+                de entrada.
+
+                Obteremos duas camadas na vista com o mesmo tipo de dados.
+                ** Uma camada é a que geramos no nosso script
+                ** A outra camada é a gerenciada através da Caixa de Ferramentas criada em output_store
+                
+                """
+                params = self.getParameters()
+                sextantelayer = params.getParameterValueAsVectorLayer("LAYER")
+                distancegrid = int(params.getParameterValueAsDouble("DISTANCEGRID"))
+        
+                # A camada obtida é de un tipo especial
+                # para facilitar gerenciamos seu store
+                store = sextantelayer.getFeatureStore()
+                features = store.features()
+
+                ### Camada 1: Gerenciada pelo script
+                sch = createSchema()
+                sch.append("GEOMETRY", "GEOMETRY")
+                sch.get("GEOMETRY").setGeometryType(geom.POINT, geom.D2)
+                shp = createShape(sch)
+                
+
+        
+                ### Camada 2: Aproveitando as opções da Caixa de Ferramentas
+                output_store = self.buildOutPutStore(
+                        features.getDefaultFeatureType(),
+                        SHAPE_TYPE_POINT,
+                        "GridP_points",
+                        "RESULT_POINT"
+                )
+                
+                # Barra de progresso
+                self.setRangeOfValues(0, features.getSize())
+                n = 0
+                
+                for feature in features:
+                    # Incrementamos barra progreso
+                    self.next() 
+
+                    # Processo
+                    extent = feature.getDefaultEnvelope()
+            
+                    xmin = extent.getMinimum(geom.DIMENSIONS.X)
+                    xmax = extent.getMaximum(geom.DIMENSIONS.X)
+                    
+                    ymin = extent.getMinimum(geom.DIMENSIONS.Y)
+                    ymax = extent.getMaximum(geom.DIMENSIONS.Y)
+            
+                    rows = int(ymax-ymin) / distancegrid
+                    cols = int(xmax-xmin) / distancegrid
+                    
+                    x = xmin
+                    y = ymax
+                    
+            
+                    for i in range(rows+1):
+                        if self.isCanceled():
+                            break
+                        for j in range(cols+1):
+                            pt = geom.createPoint2D(x, y)
+                            if feature.geometry().contains(pt):
+                                # Pontos contidos nos polígonos
+                                # são adicionados na camada
+
+                                ### Camada 1
+                                shp.append(GEOMETRY=pt)
+        
+                                ### Camada 2
+                                newfeature = self.createNewFeature(output_store, feature)
+                                newfeature["GEOMETRY"] = pt
+                                output_store.insert(newfeature)
+        
+                                
+                            x += distancegrid
+                        x = xmin
+                        y -= distancegrid
+
+                # Camada 1: Adicionamos à Vista ativa
+                shp.commit()
+                currentView().addLayer(shp)
+                
+                # Camada 2 gerenciada pela Caixa de Ferramentas
+                return True
+            
+            finally:
+                DisposeUtils.disposeQuietly(features)
+                print "Processo terminado %s" % self.getCommandLineName()
+                return True
+
+
+    def main(*args):
+            # Criamos nosso geoprocesso
+            process = GridPol()
+            # Registramos o mesmo entre os processos disponíveis no grupo de "Scripting"
+            process.selfregister("Scripting")
+            
+            # Atualizamos a interface de usuário da Caixa de Ferramentas
+            process.updateToolbox()
+
+            msgbox("Incorporado o script '%s/%s/%s' na lista de geoprocessos." % (
+                    "Scripting",
+                    process.getGroup(),
+                    process.getName()
+            ), 
+            "Processo registrado"
+            )
+            
+.. figure::  images/geo_gridpol1.png
+   :align:   center
+  
+Após adicionado aparecerá em nossa Caixa de Ferramentas:
+
+.. figure::  images/post_geo_caja.png
+   :align:   center
+   
+Este geoprocesso terá uma interface similar a essa:
+
+.. figure::  images/post_geo_interfaz.png
+   :align:   center
+   
+E terá uma barra de status mostrando o progresso durante sua execução, conforme programamos:
+
+.. figure::  images/post_geo_status.png
+   :align:   center
+   
+		
+Lançador de geoprocessos usando gvpy
+------------------------------------
+
+Uma vez registrado na Caixa de Ferramentas o geoprocesso anterior, podemos lançá-lo a partir de Scripting com a biblioteca gvpy::
+
+	from gvsig import *
+	from gvsig.libs import gvpy
+
+	def main(*args):
+
+		x = gvpy.runalg("XYShift", "Locations", "0.0", "10.0",ADDLAYER=True, NAME="Camada deslocada")
+
+Também podemos lançar outros geoprocessos, por exemplo, podemos criar duas camadas aleatórias de vetores e raster::
+
+	from gvsig import *
+	from gvsig.libs import gvpy
+
+	def main(*args):
+
+		v = gvpy.runalg("randomvector", 100, 1)
+		r = gvpy.runalg("generaterandomnormal", 100, 0, CELLSIZE=100, EXTENT=[250,250,0,500,500,0])
+		
+Lançando o exemplo 2 anteriormente explicado sobre malha de pontos sobre polígonos::
+
+    from gvsig import *
+    from gvsig.libs import gvpy
+
+    def main(*args):
+
+            x = gvpy.runalg("GridPol", "pols_example", "2",ADDLAYER=True, NAME="Grid dentro de polígono")
+
+Um exemplo lançando a ferramenta de Calculadora de mapas para arquivos raster::
+
+   from gvsig import *
+   from gvsig.libs import gvpy
+
+   def main(*args):
+
+       r1 = currentLayer() # getting raster from the view with name "rasterfile"::
+       g2 = gvpy.runalg("gridcalculator", [r1], "rasterfile Band 2 * rasterfile Band 1")
+
+Podemos encontrar maiores informações na :ref:`documentação de gvpy <label-gvpy>`
+
+Scripts no Modelador
+--------------------
+
+Após seguir o exemplo anterior, estes scripts ou geoprocessos podem ser inseridos na Caixa de Ferramentas e,  por tanto, podemos fazer uso deles no Modelador (Model Builder).
+
+Depois de inseridos podemos criar um modelo similar ao seguiente:
+
+.. figure::  images/post_geo_modelizador.png
+   :align:   center
+   
+Que aparecerá na Caixa de Ferramentas:
+
+.. figure::  images/post_geo_modelo.png
+   :align:   center
+
+Dando como resultado:
+
+.. figure::  images/post_geo_model_resultado.png
+   :align:   center

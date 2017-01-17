@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Acceso a los fenómenos de una fuente de datos tabular</title>
+  </head>
+  <body>
+    <h2>Acceso a los fenómenos de una fuente de datos tabular</h2>
+    Para acceder a los fenómenos de una fuente de datos tabular se
+    utiliza el método features. Este método devuelve un objeto que nos
+    permite iterar sobre el conjunto de datos de la capa. Sin embargo,
+    hay que tener en cuenta que el iterador reutiliza la instancia para
+    el nuevo valor, por lo que durante una iteración no debemos
+    guardarnos el valor de la instancia, si no obtener una copia de esta
+    mediante el método getCopy del fenómeno. El motivo para reutilizar
+    la instancia es que esta técnica aumenta la velocidad de ejecución y
+    crea muchas menos instancias de objetos, lo que mejora el
+    rendimiento de la máquina virtual de java.<br>
+    <h3>La colección de fenómenos. La clase FeatureSet</h3>
+    El código para obtener los fenómenos de la capa activa sería<br>
+    <pre>    layer = currentLayer() 
+    features = layer.features()
+</pre>
+    Los métodos más importantes que tiene el objeto featureSet son<br>
+    <br>
+    <ul>
+      <li> getCount(): devuelve el número de fenómenos que tiene la
+        fuente de datos </li>
+      <li> update(feature): actualiza un fenómeno dentro de la
+        colección. </li>
+    </ul>
+    Veamos cómo recorrer los fenómenos de una capa con un ejemplo.
+    Supongamos que tenemos una capa activa cuyos fenómenos tienen una
+    propiedad ELEVACION, nosotros queremos obtener el objeto feature que
+    se corresponde con el valor máximo de este atributo.<br>
+    Los pasos que se siguen en el ejemplo son (ejemplo 1):<br>
+    <ul>
+      <li> Obtenemos la capa activa </li>
+      <li> Obtenemos el iterador del conjunto de fenómenos de la capa </li>
+      <li> Inicializamos las variables </li>
+      <li> Recorremos el conjunto de fenómenos mediante el iterador </li>
+      <li> Comprobamos el valor del atributo ELEVACION </li>
+      <li> Si es mayor que el que ya hemos almacenado guardamos el
+        fenómeno </li>
+    </ul>
+    <pre>    layer = currentLayer()
+    features = layer.features()
+    fmax = 0.0
+    newFeature = None
+    for feature in features:
+    	if feature.ELEVACION &gt; fmax:
+    	newFeature = feature.getCopy()
+   	#
+    	# resto de codigo
+</pre>
+    Recuerda que debes realizar una copia de la feature y no una
+    asiganción&nbsp; directa.<br>
+    <h3>Manejo de la selección, la clase Selection</h3>
+    Podemos obtener un subconjunto concreto de fenómenos de una capa o
+    tabla aplicando un filtro sobre los atributos de los fenómenos. Para
+    ello tenemos que invocar al método 'features' de la capa usando la
+    condición que queremos que se aplique al conjunto de los datos para
+    obtener nuestro subconjunto.<br>
+    Por ejemplo, el código de aplicar un filtro a nuestro conjunto de
+    datos podría ser (ejemplo 2):<br>
+    <pre>    layer = currentLayer()
+    expresion = "ID &gt;= 50 AND ID &lt; 100"
+    features = layer.features(expresion)
+    #
+    # resto de codigo
+</pre>
+    También puede darse la circunstancia de que queramos operar con un
+    conjunto de datos que ya tenemos seleccionados en la capa. En este
+    caso deberemos usar el método getSelection de la capa (ejemplo 3).<br>
+    <pre>    layer = currentLayer()
+    features = layer.getSelection()
+    #
+    #resto de codigo
+</pre>
+    Es posible, también, que queramos recorrer los fenómenos e ir
+    añadiendo algunos a la selección, para ello, lo primero que debemos
+    hacer es obtener el objeto 'selection' y añadir los fenómenos que
+    queramos mediante el método 'select' (ejemplo 4).<br>
+    <pre>    layer = currentLayer()
+    features = layer.features()
+    for feature in features:
+      featureCopy = feature.getCopy()
+      layer.getSelection().select(featureCopy)
+      #
+      # resto de codigo
+</pre>
+    Este ejemplo anterior, haría una selección de todos los fenómenos de
+    la capa, lo que es equivalente al método 'selectAll' (ejemplo 5).<br>
+    <pre>    layer = currentLayer()
+    features = layer.getSelection().selectAll()
+</pre>
+    Si queremos seleccionar los fenómenos que cumplan una determinada
+    condición podemos hacerlo de la siguiente manera. Este ejemplo añade
+    a la selección el fenómeno que tiene el valor más alto en el campo
+    ELEVATION (ejemplo 6).<br>
+    <pre>    layer = currentLayer()
+    features = layer.features()
+    fmax =0
+    featureCopy = None
+    for feature in features:
+      if feature.ELEVACION &gt; fmax:
+        featureCopy = feature.getCopy()
+    if featureCopy:
+      layer.getSelection().select(featureCopy)
+    #
+    # resto de codigo
+</pre>
+    <h3>El objeto Feature</h3>
+    Representa un fenómeno de una fuente de datos tabular. Sus métodos
+    principales son:<br>
+    <ul>
+      <li> geometry(): Devuelve la geometría por defecto del fenómeno. </li>
+      <li> getValues(): Devuelve un diccionario con el nombre y el valor
+        de las propiedades del fenómeno </li>
+      <li> edit(): pone el fenómeno en modo edición. </li>
+      <li> set(nombre, valor): Establece en la propiedad establecida
+        mediante el parámetro nombre el valor pasado como parámetro.</li>
+      <ul>
+        <li>nombre, string: Nombre de la propiedad del fenómeno </li>
+        <li> valor, object: Valor que debe asignarse a la propiedad </li>
+      </ul>
+    </ul>
+    <h3>Modificación de los atributos de un fenómeno</h3>
+    Los fenómenos no son editables en sí mismos. Para editar un fenómeno
+    es necesario invocar al método edit(), a continuación se realizan
+    los cambios que se quieran aplicar sobre el fenómeno.<br>
+    Internamente la edición de una feature se realiza mediante una copia
+    de esta&nbsp; para evitar que se produzcan ambigüedades en el estado
+    interno del fenómeno.<br>
+    El código para modificar un atributo del fenómeno sería (ejemplo 7)<br>
+    <pre>    fuente = currentTable()
+    features = fuente.features()
+    for feature in features:
+      feature.edit()
+      feature.set("NombreDelAtributo", valor)
+      fuente.update(feature)
+    fuente.commit()
+</pre>
+    El código para modificar una capa es el mismo llamando a la
+    función&nbsp; currentLayer.<br>
+    <h3>Añadir un registro a la fuente de datos</h3>
+    Para añadir un registro o fenómeno nuevo a la fuente de datos
+    tabular debe usarse el método append de la instancia de la fuente de
+    datos.<br>
+    <pre>    table = currentTable()
+    table.append(values)
+    table.update()
+    table.commit()
+</pre>
+    <ul>
+      <li>append(values): Crea un nuevo fenómeno y lo añade a la
+        colección de datos.</li>
+      <ul>
+        <li>values, dict: Añade en la propiedad key del fenómeno, el
+          valor correspondiente. </li>
+      </ul>
+    </ul>
+    <blockquote> <i>Si el objeto no está en estado de edición al usar
+        este método se cambiará el estado a modo edición.</i><br>
+    </blockquote>
+    Por ejemplo, supongamos que tenemos un dxf sin registros con un
+    campo "Id", de tipo entero y queremos añadir 10 registros nuevos
+    cuyo id se incremente en una unidad (ejemplo 8).<br>
+    <pre>    table = currentTable()
+    values = dict()
+    for i in range(1,11):
+      values["Id"] = i
+      table.append(values)
+    table.commit()
+</pre>
+    <br>
+  </body>
+</html>

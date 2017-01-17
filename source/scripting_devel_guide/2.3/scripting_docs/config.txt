@@ -1,0 +1,14 @@
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia de referencia/Module commonsdialog.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia de referencia/Module geom.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia de referencia/Module gvsig/Simbology.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia de referencia/Module gvsig/Vectorial data.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia de referencia/Module gvsig/gvSIG Documents.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia para desarrolladores/Principales componentes/Modelo de objetos simplificado.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia para desarrolladores/Principales componentes/Funciones basicas.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia para desarrolladores/Dialogos estandard.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia para desarrolladores/Contenedores de datos/Tablas y capas.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia para desarrolladores/Contenedores de datos/Esquema de una fuente de datos.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia para desarrolladores/Contenedores de datos/Creacion de contenedores de datos.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia para desarrolladores/Contenedores de datos/Acceso a los fenomenos de una fuente de datos tabular.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/Guia para desarrolladores/Manejo de geometrias.html
+File C:/Users/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/scripting_docs/html/images/anotaciones.html

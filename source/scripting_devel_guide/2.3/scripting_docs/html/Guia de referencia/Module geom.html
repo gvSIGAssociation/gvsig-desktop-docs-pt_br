@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Module geom</title>
+  </head>
+  <body>
+    <h2>Module geom</h2>
+    <div class="stx">
+      <div class="note">To get more information about Geometry methods
+        see <span class="reference"><a
+            href="../../../javadocs/html/org/gvsig/fmap/geom/Geometry.html">Geometry</a>
+          javadoc</span> </div>
+      <div class="section" id="commons-geometries-methods">
+        <h3><span class="toc-backref">Commons geometries methods</span></h3>
+        <h4>Interface Geometry<br>
+        </h4>
+        <ul class="simple">
+          <li>area(): Return geometry area</li>
+          <li>buffer(distance): Computes a buffer area around this
+            geometry having the given width</li>
+          <li>centroid(): Return geometry centroid</li>
+          <li>distance(geometry): Returns the minimum distance between
+            this Geometry and the specified geometry.</li>
+          <li>getEnvelope(): Returns the minimum bounding box for this
+            Geometry.</li>
+          <li>getGeometryType(): Instance of the GeometryType associated
+            to this geometry</li>
+          <li>getDimension(): Returns the largest number n such that
+            each direct position in a geometric set can be associated
+            with a subset that has the direct position in its interior
+            and is similar (isomorphic) to Rn, Euclidean n-space</li>
+        </ul>
+      </div>
+      <div class="section" id="geometry-types">
+        <h3><span class="toc-backref">Geometry types</span></h3>
+        <div class="section" id="point">
+          <h4><span class="toc-backref">Point</span></h4>
+          <ul class="simple">
+            <li>getX(): Returns the X coordinate</li>
+            <li>getY(): Returns the Y coordinate</li>
+            <li>getCoordinateAt(dimension): Gets the coordinate in a
+              concrete dimension
+              <ul>
+                <li>param dimension: Dimension coordinate to get</li>
+                <li>type dimension: integer</li>
+                <li>allowed values: 0=X, 1=Y, 2=Z</li>
+              </ul>
+            </li>
+            <li>setX(value): Sets the X coordinate
+              <ul>
+                <li>param value: Value of the dimension X</li>
+                <li>type value: double</li>
+              </ul>
+            </li>
+            <li>setY(value): Sets the Y coordinate
+              <ul>
+                <li>param value: Value of the dimension Y</li>
+                <li>type value: double</li>
+              </ul>
+            </li>
+            <li>setCoordinateAt(dimension, value): Sets a ordinate in a
+              concrete dimension
+              <ul>
+                <li>param dimension: Dimension coordinate to set</li>
+                <li>type dimension: integer</li>
+                <li>param value: Value of the dimension</li>
+                <li>type value: double</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="section" id="line">
+          <h4><span class="toc-backref">Line</span></h4>
+          <p><br>
+          </p>
+          <ul class="simple">
+            <li>addVertex(point): Adds a vertex to the curve
+              <ul>
+                <li>param point: Point to addLayer</li>
+                <li>type: Point</li>
+              </ul>
+            </li>
+            <li>getNumVertices(): Gets the number of vertex of the curve</li>
+            <li>getVertex(index): Gets a vertex
+              <ul>
+                <li>param index: Geometry vertex index</li>
+                <li>type index: integer</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="section" id="polygon">
+          <h4><span class="toc-backref">Polygon</span></h4>
+          <br>
+          <ul class="simple">
+            <li>addVertex(point): Adds a vertex to the curve
+              <ul>
+                <li>param point: Point to addLayer</li>
+                <li>type: Point</li>
+              </ul>
+            </li>
+            <li>getNumVertices(): Gets the number of vertex of the curve</li>
+            <li>getVertex(index): Gets a vertex
+              <ul>
+                <li>param index: Geometry vertex index</li>
+                <li>type index: integer</li>
+              </ul>
+            </li>
+            <li>getSurfaceAppearance(): Gets surface appearance</li>
+            <li>setSurfaceAppearance(appearance): Sets surface
+              appearance</li>
+          </ul>
+        </div>
+        <div class="section" id="multigeometry">
+          <h4><span class="toc-backref">Multigeometry</span></h4>
+          <ul class="simple">
+            <li>getPrimitiveAt(int i): Returns one of the Primitive's
+              that is in a concrete position. - param i: geometry
+              position - type i: integer</li>
+            <li>getPrimitivesNumber(): Returns the number of Primitive's
+              that composes this multi geometry.</li>
+          </ul>
+        </div>
+        <div class="section" id="geometry-util-functions">
+          <h3><span class="toc-backref">Geometry util functions</span></h3>
+          <ul class="simple">
+            <li>createGeometry(type[, subtype]): Create a new geometry
+              with a concrete type and subtype
+              <ul>
+                <li>param type: geometry type</li>
+                <ul>
+                  <li>type type: integer</li>
+                </ul>
+                <li>param subtype: (Optional) geometry subtype</li>
+                <ul>
+                  <li>type type: integer</li>
+                </ul>
+                <li>return: geometry</li>
+                <ul>
+                  <li>return type: <a
+                      href="../../../javadocs/html/org/gvsig/fmap/geom/Geometry.html">Geometry</a></li>
+                </ul>
+              </ul>
+              <p><br>
+              </p>
+              <ul>
+              </ul>
+            </li>
+            <li>createPoint([x][, y][, subtype]): Create a new point
+              with a subtype dimensions and sets the value for 'X' and
+              'Y' coordinates. If is used without parameters will return
+              new Point2D with (0,0) coordinates
+              <ul>
+                <li>param x:(Optional) X coordinate value</li>
+                <ul>
+                  <li>type x: double</li>
+                </ul>
+                <li>param y:(Optional) Y coordinate value</li>
+                <ul>
+                  <li>type y: double</li>
+                </ul>
+                <li>param subtype: (Optional) geometry dimensions</li>
+                <ul>
+                  <li>type: integer</li>
+                </ul>
+                <li>return: Point</li>
+                <ul>
+                  <li>return type: <a
+href="file:///home/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/javadocs/html/org/gvsig/fmap/geom/primitive/Point.html">Point</a></li>
+                </ul>
+              </ul>
+              <p><br>
+              </p>
+              <ul>
+              </ul>
+            </li>
+            <li>createMultiPoint(points[, subtype]): Create a new
+              multipoint with a subtype from a list values of X and Y
+              like ([x1, y1], [x2, y2], ...., [xn, yn])
+              <ul>
+                <li>param points: list of tuples with X and Y values</li>
+                <ul>
+                  <li>type points: list</li>
+                </ul>
+                <li>param subtype: (Optional) geometry dimensions</li>
+                <ul>
+                  <li>type: integer</li>
+                </ul>
+                <li>return: multipoint<a
+href="../../../javadocs/html/org/gvsig/fmap/geom/aggregate/MultiPoint.html"></a></li>
+                <ul>
+                  <li>return type: <a
+href="file:///home/jjdelcerro/gvSIG/plugins/org.gvsig.scripting.app.extension/help/javadocs/html/org/gvsig/fmap/geom/aggregate/MultiPoint.html">multipoint</a></li>
+                </ul>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
