@@ -1,5 +1,5 @@
 Trabalhando com esquemas: FeatureType
-========================================
+====================================
 
 Os descritores contêm a informação sobre o nome, tipo, tamanho, precisão, etc. dos campos dos nossos dados.
 
