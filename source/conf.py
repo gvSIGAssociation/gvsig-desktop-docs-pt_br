@@ -105,14 +105,14 @@ html_theme = 'default'
 #html_theme_options = {}
 
 html_theme_options = {
-#    "rightsidebar": "false",
-#    "relbarbgcolor": "orange",
-#    "sidebartextcolor": "white",
-#    "sidebarlinkcolor": "white",
-#    "sidebarbgcolor": "orange",
-#    "collapsiblesidebar": "true",
-#    "sidebarbtncolor": "orange",
-#    "bgcolor": "white",
+    "rightsidebar": "false",
+    "relbarbgcolor": "orange",
+    "sidebartextcolor": "#404040",
+    "sidebarlinkcolor": "#404040",
+    "sidebarbgcolor": "white",
+    "collapsiblesidebar": "true",
+    "sidebarbtncolor": "white",
+    "bgcolor": "white",
     "sidebarwidth": "320"
 }
 
