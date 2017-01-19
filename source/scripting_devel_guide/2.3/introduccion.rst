@@ -73,7 +73,7 @@ Como acessar o Módulo de criação de Scripting
 Uma vez instalado gvSIG 2 já podemos abri-lo. Para acessar este módulo de programação será através do menu:`Ferramentas --> Scripting`. Aqui nos encontraremos 3 opções:
 
 Lançador de Scripts
-+++++++++++++++++++++++++
+++++++++++++++++++
 
 .. figure::  images/scripting_launcher.png
    :align:   center
@@ -95,7 +95,7 @@ Os ícones principais: Novo, Abrir, Salvar, Salvar e Executar, Fechar.. Depois d
 A execução do script aparecerá refletida no terminal que se situa na parte inferior,
 
 Terminal Jython
-++++++++++++++++++
+++++++++++++++
 
 .. figure::  images/scripting_console.png
    :align:   center
@@ -105,7 +105,7 @@ Terminal Jython
 Outra função interessante é que nos oferece também uma ajuda dos comandos que estão disponíveis segundo o código que estejamos escrevendo, ou de que tipo de métodos estão disponíveis nas diferentes classes do gvSIG.
 
 Bibliotecas do gvSIG para Scripting
---------------------------------------
+---------------------------------
 
 Foi criada uma biblioteca escrita em Jython denominada ``gvsig``. Sua função é injetar métodos extras nas classes de Java já existentes na API do gvSIG e ampliar através de novas funções o potencial e a facilidade de uso deste módulo.
 
@@ -174,6 +174,8 @@ Agora podemos escrever nosso primeiro script. O exemplo que aparece por padrão 
 .. code-block:: python
     :linenos:
     :emphasize-lines: 5
+    :caption: primer_script.py
+    :name: primer-script
 
     # encoding: utf-8
 

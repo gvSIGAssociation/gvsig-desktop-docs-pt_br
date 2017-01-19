@@ -143,6 +143,8 @@ Ou depende de como realizamos a importação.
 .. code-block:: python
 	:linenos:
 	:emphasize-lines: 1, 5
+	:caption: msgbox.py
+	:name: msgbox-commonsdialog
 	
 	from gvsig.commonsdialog import *
 

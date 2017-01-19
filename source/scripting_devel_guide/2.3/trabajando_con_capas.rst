@@ -1,5 +1,5 @@
 Trabalhando com camadas: FLayer
-=================================
+============================
 
 Trabalhando com camadas :javadoc:`FLayer <FLayer>`
 
@@ -26,7 +26,7 @@ Uma das operações mais importante é o trabalho com camadas vetoriais :javadoc
 Já vimos anteriormente a geração de esquemas que podem ser usados em camadas vetoriais. A única condição destes esquemas é que tenham um campo ``GEOMETRY`` com um tipo definido de geometria.
 
 Criar camada vetorial
-++++++++++++++++++++++++
+++++++++++++++++++++
 
 Para a criação de camadas procuramos simplificar o máximo a função :py:func:``createShape(definition)``. O único parâmetro obrigatório será o esquema da camada com seu campo geometria.
 
@@ -150,53 +150,53 @@ Em seguida o que faremos é adicionar dados a esta camada vetorial. Para isto co
 
 Outro exemplo adicionando entidades, usando a partir do Java::
 
-  import gvsig
-  reload(gvsig)
-  from gvsig import *
-  from gvsig import geom
-  
-  from org.gvsig.fmap.dal.feature import FeatureStore
-  def main(*args):
-  
-          # Criar nova camada
-          schema = createSchema()
-          schema.append("ID", "INTEGER")
-          schema.append("NOME", "STRING", 10)
-          schema.append("GEOMETRY", "GEOMETRY")
-          schema.get('GEOMETRY').setGeometryType(geom.POINT,geom.D2)
-  
-          camada = createShape(schema, prefixname="Camada_ponto")
-  
-          # Inserir com newfeature
-          store = camada.getFeatureStore()
-  
-          newfeature = store.createNewFeature()
-          newfeature.set("ID",1)
-          newfeature.set("NOME","Feature1")
-          newfeature.set("GEOMETRY", geom.createPoint(geom.D2, 1,2))
-    
-          camada.edit(FeatureStore.MODE_APPEND) #somente para camadas recém criadas
-          store.insert(newfeature)
-          camada.commit()
-  
-          # Inserir com append
-          camada.edit()
-          camada.append(ID=2,NOME='Feature2',GEOMETRY=geom.createPoint(geom.D2, 5, 3))
-  
-          camada.append({'ID':3,'NOME':'Feature2','GEOMETRY':geom.createPoint(geom.D2, 3, 3)})
-          camada.append({'ID':4,'NOME':'Feature2','GEOMETRY':geom.createPoint(geom.D2, 2, 1)})
-          camada.append({'ID':5,'NOME':'Feature3','GEOMETRY':geom.createPoint(geom.D2, 2, 6)})
-          camada.append({'ID':6,'NOME':'Feature3','GEOMETRY':geom.createPoint(geom.D2, 6, 2)})
-          camada.append({'ID':7,'NOME':'Feature3','GEOMETRY':geom.createPoint(geom.D2, 2, 7)})
-          camada.commit()
-  
-          # Adicionar camada na vista
-          currentView().addLayer(camada)
-  
-          print u"Informações das entidades"
-          for l in camada.features():
-                  print l 
-		  
+import gvsig
+reload(gvsig)
+from gvsig import *
+from gvsig import geom
+
+from org.gvsig.fmap.dal.feature import FeatureStore
+def main(*args):
+
+        # Criar nova camada
+        schema = createSchema()
+        schema.append("ID", "INTEGER")
+        schema.append("NOME", "STRING", 10)
+        schema.append("GEOMETRY", "GEOMETRY")
+        schema.get('GEOMETRY').setGeometryType(geom.POINT,geom.D2)
+
+        camada = createShape(schema, prefixname="Camada_ponto")
+
+        # Inserir com newfeature
+        store = camada.getFeatureStore()
+
+        newfeature = store.createNewFeature()
+        newfeature.set("ID",1)
+        newfeature.set("NOME","Feature1")
+        newfeature.set("GEOMETRY", geom.createPoint(geom.D2, 1,2))
+
+        camada.edit(FeatureStore.MODE_APPEND) #somente para camadas recém criadas
+        store.insert(newfeature)
+        camada.commit()
+
+        # Inserir com append
+        camada.edit()
+        camada.append(ID=2,NOME='Feature2',GEOMETRY=geom.createPoint(geom.D2, 5, 3))
+
+        camada.append({'ID':3,'NOME':'Feature2','GEOMETRY':geom.createPoint(geom.D2, 3, 3)})
+        camada.append({'ID':4,'NOME':'Feature2','GEOMETRY':geom.createPoint(geom.D2, 2, 1)})
+        camada.append({'ID':5,'NOME':'Feature3','GEOMETRY':geom.createPoint(geom.D2, 2, 6)})
+        camada.append({'ID':6,'NOME':'Feature3','GEOMETRY':geom.createPoint(geom.D2, 6, 2)})
+        camada.append({'ID':7,'NOME':'Feature3','GEOMETRY':geom.createPoint(geom.D2, 2, 7)})
+        camada.commit()
+
+        # Adicionar camada na vista
+        currentView().addLayer(camada)
+
+        print u"Informações das entidades"
+        for l in camada.features():
+                print l 
+		
 Se ao final do script anterior adicionamos as seguintes linhas, veremos um exemplo para eliminar entidades::
 
 
