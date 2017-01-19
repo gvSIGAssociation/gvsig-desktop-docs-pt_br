@@ -1,5 +1,5 @@
 Modelo de classes simplificado
-===============================
+=============================
 
 .. |m1| image:: images/modelo_1plugins.png
 .. |m2| image:: images/modelo_2acciones.png
@@ -17,7 +17,7 @@ Plugins
    
 .. raw:: html
 
-    <img style="max-width: none" src="../../../_images/modelo_1plugins.png" alt="" usemap="#modelo_1plugins" />
+    <img style="max-width: none" src="../../../html/_images/modelo_1plugins.png" alt="" usemap="#modelo_1plugins" />
     <map name="modelo_1plugins" id="modelo_1plugins">
     <area alt="" title="" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/andami/PluginsLocator.html" shape="poly" coords="49,42,145,44,144,64,50,66" />
     <area alt="" title="" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/andami/PluginsManager.html" shape="poly" coords="195,90,302,90,302,112,194,113" />
@@ -31,7 +31,7 @@ Ações
 
 .. raw:: html
 
-    <img style="max-width: none" src="../../../_images/modelo_2acciones.png" alt="" usemap="#modelo_2acciones.png" />
+    <img style="max-width: none" src="../../../html/_images/modelo_2acciones.png" alt="" usemap="#modelo_2acciones.png" />
     <map name="modelo_2acciones.png" id="modelo_2acciones.png">
         <area alt="" title="" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/andami/PluginsLocator.html" shape="poly" coords="25,71,126,74,128,95,29,95" />
         <area alt="" title="" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/andami/actioninfo/ActionInfoManager.html" shape="poly" coords="129,137,255,136,254,159,131,166" />
@@ -46,7 +46,7 @@ Projeto e documentos
    
 .. raw:: html
 
-    <img style="max-width: none" src="../../../_images/modelo_3proyectodocumento.png" alt="" usemap="#modelo_3proyectodocumento" />
+    <img style="max-width: none" src="../../../html/_images/modelo_3proyectodocumento.png" alt="" usemap="#modelo_3proyectodocumento" />
     <map name="modelo_3proyectodocumento" id="modelo_3proyectodocumento">
     <area alt="" title="ApplicationLocator" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/app/ApplicationLocator.html" shape="poly" coords="26,40,150,40,149,63,26,61" />
     <area alt="" title="ApplicationManager" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/app/ApplicationManager.html" shape="poly" coords="194,16,499,17,500,95,192,95" />
@@ -70,7 +70,7 @@ Mapcontrol
 
 .. raw:: html
 
-    <img style="max-width: none" src="../../../_images/modelo_4mapcontrol.png" alt="" usemap="#modelo_4mapcontrol" />
+    <img style="max-width: none" src="../../../html/_images/modelo_4mapcontrol.png" alt="" usemap="#modelo_4mapcontrol" />
     <map name="modelo_4mapcontrol" id="modelo_4mapcontrol">
     <area alt="" title="MapControlLocator" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/fmap/mapcontrol/MapControlLocator.html" shape="poly" coords="42,26,170,25,167,49,42,47" />
     <area alt="" title="MapControl" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/fmap/mapcontrol/MapControl.html" shape="poly" coords="249,18,556,19,553,97,255,92,252,93" />
@@ -96,7 +96,7 @@ MapContext
    
 .. raw:: html
 
-    <img style="max-width: none" src="../../../_images/modelo_5mapcontext.png" alt="" usemap="#modelo_5mapcontext" />
+    <img style="max-width: none" src="../../../html/_images/modelo_5mapcontext.png" alt="" usemap="#modelo_5mapcontext" />
     <map name="modelo_5mapcontext" id="modelo_5mapcontext">
         <area alt="" title="MapContextLocator" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/fmap/mapcontext/MapContextLocator.html" shape="poly" coords="19,19,150,19,149,38,14,43" />
         <area alt="" title="MapContextManager" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/fmap/mapcontext/MapContextManager.html" shape="poly" coords="19,82,298,81,296,129,20,129" />
@@ -113,7 +113,7 @@ Geometrias
 
 .. raw:: html
    
-    <img style="max-width: none" src="../../../_images/modelo_6geometrias.png" alt="" usemap="#modelo_6geometrias" />
+    <img style="max-width: none" src="../../../html/_images/modelo_6geometrias.png" alt="" usemap="#modelo_6geometrias" />
     <map name="modelo_6geometrias" id="modelo_6geometrias">
         <area alt="" title="GeometryLocator" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/fmap/geom/GeometryLocator.html" shape="poly" coords="33,6,148,8,146,33,32,34" />
         <area alt="" title="GeometryManager" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/fmap/geom/GeometryManager.html" shape="poly" coords="11,56,185,59,184,103,11,105" />
@@ -137,7 +137,7 @@ Acesso a dados (DAL)
    
 .. raw:: html
 
-    <img style="max-width: none" src="../../../_images/modelo_7dal.png" alt="" usemap="#modelo_7dal" />
+    <img style="max-width: none" src="../../../html/_images/modelo_7dal.png" alt="" usemap="#modelo_7dal" />
     <map name="modelo_7dal" id="modelo_7dal">
         <area alt="" title="DALLocator" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/fmap/dal/DALLocator.html" shape="poly" coords="48,14,128,18,131,41,50,38" />
         <area alt="" title="Evaluator" href="http://downloads.gvsig.org/download/gvsig-desktop-testing/dists/2.3.0/javadocs/html/org/gvsig/tools/evaluator/Evaluator.html" shape="poly" coords="458,19,659,18,659,64,457,67" />
