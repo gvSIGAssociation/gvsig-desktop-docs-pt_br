@@ -1,0 +1,379 @@
+﻿Interfaces visuais
+===================
+
+Abeille
+-------
+
+Abeille é um programa muito fácil de usar, que auxilia na criação de interfaces visuais. Com este programa podemos desenhar o aspecto visual das janelas, nomes, etc. Fazendo uso da biblioteca FormPanel podemos carregá-lo facilmente em um script, e tirar o máximo proveito.
+
+.. |abeille| image:: images/icon-abeille.png
+
+Abriremos o Abeille a partir do botão |abeille| situado na barra de Ferramentas do Scripting Composer.
+
+.. note::
+
+   Para aparecer a ferramenta do Abeille, é necessário ter instaladas as ferramentas denominadas **ScriptingComposerTools** que descarregamos a partir do Administrador de Complementos.
+
+Abaixo podemos ver a imagem do programa Abeille com o exemplo de coordenadas.xml aberto:
+
+.. figure::  images/abeille.png
+   :align:   center
+
+Exemplo de uso
+--------------
+
+Para acompanhar o exemplo de uso, descarregue o exemplo em: :download:`CentrarCoordenadas <ejemplos/gvSIG-desktop-2.3.0-centrar_coordenadas-1.0.0-2-testing-all-all-j1_7.gvspkg>` e instale-o através do gerenciador de programa, utilizando a opção: Através de um arquivo (instalar complementos incluídos em um arquivo .gvspki ou gvspks).
+
+
+.. figure::  images/abeille_1.png
+   :align:   center
+   
+Para criar uma interface visual criaremos um novo formulário no Abeille.
+
+.. figure::  images/abeille_2.png
+   :align:   center
+
+Criaremos uma novo rótulo ``label``.
+
+.. figure::  images/abeille_3.png
+   :align:   center
+
+Clicamos com o mouse no lugar onde queremos colocar o nosso rótulo(label).
+
+.. figure::  images/abeille_4.png
+   :align:   center
+   
+Agora podemos colocar o nome do rótulo. É com este nome que acessaremos o componente a partir do nosso script. Neste caso, daremos o nome ``lblName``.
+
+.. figure::  images/abeille_5.png
+   :align:   center
+
+Modificamos o texto do rótulo para: *Coordenadas*
+
+.. figure::  images/abeille_6.png
+   :align:   center
+
+
+Podemos ampliar o tamanho que o rótulo vai ocupar do formulário para ajustá-lo na interface que vamos criar. Neste caso queremos que ocupe 3 colunas de nossa grade, deixando uma coluna para cada lado para que os componentes que estamos criando não fiquem juntos da borda da janela.
+
+.. figure::  images/abeille_7.png
+   :align:   center
+
+Vemos que o espaço que ocupa o rótulo de Coordenas foi ampliado. Para a interface deste script faremos uso de 5 colunas, 3 para situar os componentes e as outras duas de separação com as bordas. Podemos eliminar as colunas que não pretendemos utilizar. Para isto fazemos o uso do ícone "Delete Columns":
+
+.. figure::  images/abeille_71.png
+   :align:   center
+
+Vamos ampliar a largura de algumas colunas do formulário para uma melhor visualização, mais a frente explicaremos outras opções para que o painel se encarregue automaticamente desta largura e nos asseguremos de uma correta visualização. Para isto, só teremos que pressionar sobre a coluna que queremos modificar, e mover o sinal que aparece acima e a direita:
+
+.. figure::  images/abeille_72.png
+   :align:   center
+
+Repetimos o processo para criar mais dois rótulos denominadas ``lblX`` e ``lblY``, com textos de "X: " e "Y: " respectivamente. Deixaremos uma linha entre cada um deles para uma melhor visualização:
+
+.. figure::  images/abeille_8.png
+   :align:   center
+   
+Agora criaremos um ``text field`` ou campo de texto. Este campo permitirá tanto mostrar valores, como permitir ao usuário inserir:
+
+.. figure::  images/abeille_9.png
+   :align:   center
+   
+Repetimos o mesmo processo anterior à criação de dois *text fields* denominados ``txtX`` y ``txtY``.
+
+.. figure::  images/abeille_10.png
+   :align:   center
+
+À coluna em que se situam as caixas de texto, vamos dotá-la com a possibilidade de aumentá-la em caso necessário, por exemplo, se o usuário aumenta a janela. Esta opção ajudará a manter a correta visualização da interface, e nos dá a opção de detalhar os componentes que permitimos que troque de tamanho.
+
+Para isto, vamos a selecionar alguma célula situada na coluna que contém os componentes de Caixas de Texto, e vamos ao menu de cima :menuselection:`Column --> Resize: Grow`.
+
+.. figure::  images/abeille_101.png
+   :align:   center
+
+Vemos como a pré-visualização do formulário foi modificado, aparecendo maior na coluna selecionada:
+
+.. figure::  images/abeille_102.png
+   :align:   center
+
+O seguinte passo é criar espaço para os botões da aplicação, que neste caso, serão dois. O primeiro botão destinado a realizar uma ação que será  de Centrar: ``btnCenter``, e outro botão destinado a fechar a aplicação: ``btnClose``.
+
+Para ter maior liberdade de configuração em relação a posição e tamanho dos botões, assim como de ajudar na correta visualização da interface, vamos fazer da seguinte maneira.
+
+Primero vamos inserir um componente do tipo "Embedded Form". Esta opção nos permite inserir um formulário dentro de outro.
+
+.. figure::  images/abeille_103.png
+   :align:   center
+
+Colocaremos o novo componente abaixo do último rótulo, deixando uma linha de separação:
+
+.. figure::  images/abeille_104.png
+   :align:   center
+
+Nos aparecerá uma janela para indicar qual tamanho de formulário queremos inserir, indicaremos 4 colunas e 1 linha. Desta forma teremos espaço para situar os dois botões e deixar separação entre eles.
+
+.. figure::  images/abeille_105.png
+   :align:   center
+
+Dando como resultado algo similar a:
+
+.. figure::  images/abeille_106.png
+   :align:   center
+
+Uma vez inserido, indicaremos que ocupe também as duas colunas seguintes, da mesma forma que fizemos com o primeiro rótulo Coordenadas, usando ``Increse Column Span``.
+
+.. figure::  images/abeille_107.png
+   :align:   center
+
+Deixando uma linha de separação para a borda de baixo, podemos eliminar também as linhas que não nos interessa. O resultado será similar a:
+
+.. figure::  images/abeille_108.png
+   :align:   center
+
+Vamos indicar que este subformulário se alinhe a direita da célula na qual ele está. Clicamos sobre a célula que contém o subformulário e na direita em :menuselection:`Form Properties --> Cell --> Alignment --> Horizontal --> RIGHT`, teremos como resultado:
+
+.. figure::  images/abeille_109.png
+   :align:   center
+
+Agora já podemos criar os botões no subformulário, ``btnCenter`` e ``btnClose``. Selecionamos a opção jButton:
+
+.. figure::  images/abeille_110.png
+   :align:   center
+
+E situamos os dois botões dentro do subformulário:
+
+.. figure::  images/abeille_111.png
+   :align:   center
+
+Há a opção de estender este subformulário:
+
+.. figure::  images/abeille_112.png
+   :align:   center
+
+Aparecerá o formulário em uma janela diferente:
+
+.. figure::  images/abeille_113.png
+   :align:   center
+
+Com isto já temos a interface preparada, só teremos que guardá-la na mesma pasta do script que estávamos criando com extensão ``.xml``:
+
+.. figure::  images/abeille_114.png
+   :align:   center
+
+Em qualquer momento podemos realizar modificações da interface abrindo novamente o arquivo ``.xml`` a partir do Abeille.
+
+Aqui vemos como responde a aplicação com diferentes tamanhos de janelas que vamos aplicando:
+
+.. figure::  images/abeille_115.png
+   :align:   center
+
+ A partir do código podemos estabelecer o tamanho que queremos que tenha a janela com a linha ``self.setPreferredSize(300,300)``, sendo algo semelhante conforme o script que temos::
+
+    from gvsig import *
+    from gvsig.libs.formpanel import FormPanel
+
+    class Panel(FormPanel):
+        def __init__(self):
+            FormPanel.__init__(self, os.path.join(os.path.dirname(__file__), "ui_basic.xml"))
+            self.setPreferredSize(300,300)
+
+    def main(*args):
+        l = Panel()
+        l.showTool("Visual")
+        pass
+
+Também temos muito mais opções que nos permitem configurar com mais detalhe a forma de reagir dos nossos componentes da interface, como por exemplo, no menu de opções de Coluna:
+
+.. figure::  images/abeille_116.png
+   :align:   center
+
+Uso do FormPanel
+----------------
+
+Para a criação de script visuais nos apoiaremos na classe FormPanel contida em ``gvsig.libs.formpanel``. Criaremos uma nova classe que tenha a funcionalidade de nosso script e estenderemos a partir do FormPanel.
+
+Primero vamos  criar uma nova pasta onde iremos salvar o nosso exemplo.
+
+.. figure::  images/abeille_script_1.png
+   :align:   center
+   
+Depois, um script nesta pasta denominado *centrar_coordenadas.py*.
+
+.. figure::  images/abeille_script_2.png
+   :align:   center
+   
+Guardaremos o formulário na pasta que criamos anteriormente.
+
+Exemplo básico de carregar uma interface em um script::
+
+    from gvsig import *
+    from gvsig.libs.formpanel import FormPanel
+    import os
+
+    class Panel(FormPanel):
+        def __init__(self):
+            FormPanel.__init__(self, os.path.join(os.path.dirname(__file__), "ui_basic.xml"))
+
+    def main(*args):
+        l = Panel()
+        l.showTool("Visual")
+        pass
+
+Nós vamos se basear neste modelo para a criação de nosso script de *centrar_coordenadas.py*.
+
+Por padrão, no FormPanel vem um método ``btnClose_click``, que servirá para cerrar este script. Desta forma só teremos que definir em Abeille um botão denominado ``btnClose`` e já teremos um botão programado para fechar aplicação.
+
+Nós temos nosso módulo pronto para ser programado. Temos uma pasta contendo script e interface.
+
+.. figure::  images/abeille_script_3.png
+   :align:   center
+
+Seguimos desenvolvendo as funcionalidades de FormPanel. Uma delas é o auto enlace com eventos que se produzem nos elementos da interface visual. Por exemplo, se temos (em nosso exemplo) um botão denominado ``btnCenter`` e queremos que ele faça uma determinada ação quando clicamos sobre ele, somente deveremos criar um método em nossa classe que contenha o nome do elemento "btnCenter" terminado com o evento que queremos capturar "_click".
+
+Desta forma não teremos que preocupar-nos com o evento, já que a própria biblioteca FormPanel fará::
+
+    # encoding: utf-8
+
+    from gvsig import *
+    from gvsig.libs.formpanel import FormPanel
+    import os
+
+    class CenterCoordinates(FormPanel):
+        def __init__(self):
+            FormPanel.__init__(self, 
+                                os.path.join(os.path.dirname(__file__), 
+                                            "centrar_coordenadas.xml")
+                                )
+
+        def btnCenter_click(self, *args):
+            print "Clicked!"
+        
+        def btnClose_click(self,*args):
+            self.hide()
+        
+    def main(*args):
+        l = CenterCoordinates()
+        l.showTool("Centrar Coordenadas")
+        pass
+  
+Ao executar o script aparecerá uma interface similar a esta:
+
+.. figure::  images/abeille_script_4.png
+   :align:   center
+
+Ao pressionar o botão *Centrar*, ocorre tal como temos programado no método *btnCenter_click*, mostrará a palavra *Clicked!* no console.
+
+.. figure::  images/abeille_script_5.png
+   :align:   center
+
+Se pressionamos o botão *Cerrar* aplicação será fechada, fazendo uso de um método já implementado na classe *FormPanel*, sem necessidade de nós programarmos. No caso que desejemos cuidar desta função, só temos que substituir o método na nossa classe, ou dar outro nome para fechar o componente de aplicação.
+
+Por exemplo, também poderíamos modificar o texto do rótulo ou outros valores de uma forma similar a::
+
+    self.txtX.setText("Clique!")
+    self.txtY.setText("Clique!")
+
+.. figure::  images/abeille_script_7.png
+   :align:   center
+   
+Como temos visto, para acessar os nossos componentes na interface, o faremos mediante *self. + nome do componente.* Por exemplo, vamos implementar no botão *Centrar*, que mostre por console as coordenadas que o usuário escreveu nas caixas de texto.
+
+Para isto faremos referência aos componentes das caixas de texto ``txtX`` e ``txtY`` que temos programado na interface::
+
+    def btnCenter_click(self, *args):
+        x = self.txtX.getText()
+        y = self.txtY.getText()
+        print "X: ", x, " Y: ", y
+      
+Aqui vemos como ficará:
+
+.. figure::  images/abeille_script_6.png
+   :align:   center
+   
+Agora, para cumprir o propósito do script, centrar a vista em uma par de coordenadas, só teremos que modificar o método *btnCenter_click* por algo similar ao seguinte::
+
+    # encoding: utf-8
+
+    from gvsig import *
+    from gvsig import geom
+    from gvsig.libs.formpanel import FormPanel
+    import os
+
+    class CenterCoordinates(FormPanel):
+        def __init__(self):
+            FormPanel.__init__(self, 
+                                os.path.join(os.path.dirname(__file__), 
+                                            "centrar_coordenadas.xml")
+                                )
+
+        def btnCenter_click(self, *args):
+            x = float(self.txtX.getText())
+            y = float(self.txtY.getText())
+            point = geom.createPoint2D(x, y)
+            currentView().centerView(point.getEnvelope())
+        
+        def btnClose_click(self,*args):
+            self.hide()
+        
+    def main(*args):
+        l = CenterCoordinates()
+        l.showTool("Centrar Coordenadas")
+        pass
+
+Dando como resultado algo assim:
+
+.. figure::  images/abeille_script_8.png
+   :align:   center
+
+Vemos como foi centrada a Vista nas coordenadas que foram digitadas nas caixas de texto.
+
+
+Tratar com diferentes componentes
+---------------------------------
+
+Grupos de RadioButton
++++++++++++++++++++++
+
+Uma função habitual utilizada na interface é a criação de um grupo de RadioButton para permitir a seleção entre várias opções. Em geral, estas opções vão agrupadas e só permite a seleção de uma delas. Devemos fazer estas agrupações por código, de uma forma similar ao seguinte.
+
+Depois de fazer a interface, no método ``__init__`` com ``FormPanel.__init__(..)``, teremos que criar o grupo de botões e adicionar um a um para os que formam parte do agrupamento, por exemplo::
+
+
+    from javax.swing import ButtonGroup
+    ...
+    self.btgAnswers = ButtonGroup()
+    self.btgAnswers.add(self.rdbOption1)
+    self.btgAnswers.add(self.rdbOption2)
+
+Sendo ``rdbOption1`` e ``rdbOption2``, componentes do tipo **RadioButton** da interface.
+
+.. figure::  images/interfaz_rdb.png
+   :align:   center
+
+Eventos auto registrados
+------------------------
+
+Temos comentado que FormPanel se encarrega de ligar os eventos dos componentes com nosso script, mas nem todos os eventos possíveis de cada elemento da interface estão implementados dentro de FormPanel (mas se necessitar alguns deles é possível adicionar ou implementar em sua própria classe). Aqui mostramos alguns destes eventos fazendo referência a *spinners*, *combobox*, etc::
+
+
+        def btnCalcular_click(self, *args):
+            self.txtField.setText("Clicked!")
+            print "Clicked!"
+
+        def chb1_change(self, *args):
+            print "Check box!"
+
+        def rb1_change(self, *args):
+            print "Radio button!"
+
+        def cmb1_change(self, *args):
+            print "Combobox!"
+
+        def sld1_focusGained(self, *args):
+            print "Slider!", sld1.getValue()
+
+        def spn1_change(self, *args):
+            print "Spinner!"
+
+        def btnClose_click(self,*args):
+            self.hide()
