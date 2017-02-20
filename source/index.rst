@@ -16,30 +16,14 @@ gvSIG 2.3
 ---------
 
 * `Documentação Scripting gvSIG 2.3`_
-* `Manual de usuario 2.3 [ES]`_
-* :download:`Manual de usuario 2.3 (PDF)[ES] <user_manual/2.3/manual/gvsig-2.3.0-doc-1.0.0-es.pdf>`
-* `Cómo contribuir en gvSIG [ES]`_
-* `Guia de inicio rápido para desarrolladores 2.3 [ES]`_
-* `Talleres [ES]`_
 
 .. _Documentação Scripting gvSIG 2.3: scripting_devel_guide/2.3/index.html
 
-.. _Cómo contribuir en gvSIG [ES]: http://downloads.gvsig.org/download/web/es/build/html/gvsig_contributions/index.html
-.. _Manual de usuario 2.3 [ES]: http://downloads.gvsig.org/download/web/es/build/html/user_manual/2.3/index.html
-.. _Guia de inicio rápido para desarrolladores 2.3 [ES]: http://downloads.gvsig.org/download/web/es/build/html/developers_quick_start/2.3/index.html
-.. _Talleres [ES]: http://downloads.gvsig.org/download/web/es/build/html/workshops/index.html  
 
 gvSIG 2.2
 ---------
    
 * `Manual Usuario (PT 2.2)`_
-* `Guia de inicio rápido para desarrolladores [ES]`_
-* `org.gvsig.fmap.dal [ES]`_
 
 .. _Manual Usuario (PT 2.2): user_manual/2.2/index.html
-
-.. _Guia de inicio rápido para desarrolladores [ES]: http://downloads.gvsig.org/download/web/es/build/html/developers_quick_start/2.2/index.html
-.. _org.gvsig.fmap.dal [ES]: http://downloads.gvsig.org/download/web/es/build/html/org.gvsig.fmap.dal/2.2/index.html
-
-
 
